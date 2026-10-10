@@ -1,0 +1,1114 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطة عمل تنفيذ مشروع الصيانة التنبؤية للمحركات الحثية</title>
+    <!-- Google Fonts: Cairo & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: #131a29;
+            --bg-card-hover: #1a2438;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-active: #06b6d4;
+            --accent-cyan: #06b6d4;
+            --accent-blue: #3b82f6;
+            --accent-purple: #8b5cf6;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-glow: 0 0 25px rgba(6, 182, 212, 0.15);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.7;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Header Section */
+        header {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: radial-gradient(circle at top center, rgba(6, 182, 212, 0.12) 0%, rgba(139, 92, 246, 0.05) 50%, transparent 80%);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), transparent);
+        }
+
+        .badge-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--accent-cyan);
+            padding: 0.4rem 1rem;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+        }
+
+        h1 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        header p {
+            color: var(--text-secondary);
+            max-width: 800px;
+            margin: 0 auto 1.5rem auto;
+            font-size: 1.05rem;
+        }
+
+        .meta-stats {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px dashed var(--border-color);
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+        }
+
+        .stat-item strong {
+            color: var(--text-primary);
+        }
+
+        /* Stepper Navigation */
+        .stepper-nav {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 0.8rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .nav-btn {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            padding: 0.8rem 0.5rem;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: center;
+            transition: all 0.25s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .nav-btn:hover {
+            border-color: var(--accent-cyan);
+            color: var(--text-primary);
+            background: var(--bg-card-hover);
+        }
+
+        .nav-btn.active {
+            border-color: var(--accent-cyan);
+            background: rgba(6, 182, 212, 0.12);
+            color: var(--accent-cyan);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .nav-btn span.step-num {
+            width: 22px;
+            height: 22px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+        }
+
+        .nav-btn.active span.step-num {
+            background: var(--accent-cyan);
+            color: #000;
+        }
+
+        /* Main Section Cards */
+        .phase-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            transition: border-color 0.3s ease;
+            position: relative;
+        }
+
+        .phase-card:hover {
+            border-color: rgba(6, 182, 212, 0.4);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .phase-title-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .phase-icon-box {
+            width: 48px;
+            height: 48px;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.2);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            color: var(--accent-cyan);
+        }
+
+        .phase-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .phase-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+        }
+
+        .phase-tag {
+            font-size: 0.78rem;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            background: rgba(139, 92, 246, 0.15);
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            color: var(--accent-purple);
+            font-weight: 700;
+        }
+
+        /* Content Grids & Clean Lists */
+        .substeps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .substep-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .substep-box:hover {
+            background: rgba(255, 255, 255, 0.04);
+            transform: translateY(-2px);
+        }
+
+        .substep-title {
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: var(--accent-cyan);
+            margin-bottom: 0.6rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .substep-desc {
+            font-size: 0.92rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+        }
+
+        /* Bullet Task Items (No Checkboxes / No Strikethrough) */
+        .task-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.6rem;
+            margin-bottom: 0.6rem;
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .bullet-icon {
+            color: var(--accent-emerald);
+            font-weight: 900;
+            flex-shrink: 0;
+            font-size: 0.85rem;
+            margin-top: 0.1rem;
+        }
+
+        /* Data Specifications Table */
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .custom-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            text-align: right;
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+
+        .custom-table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+        }
+
+        .custom-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .badge-small {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+        .badge-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .badge-purple { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+
+        /* Code Viewer Widget */
+        .code-box {
+            background: #080c14;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            margin-top: 1rem;
+            direction: ltr;
+            text-align: left;
+            position: relative;
+            overflow-x: auto;
+        }
+
+        .code-box header {
+            padding: 0 0 0.5rem 0;
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: transparent;
+            border-radius: 0;
+        }
+
+        .code-box code {
+            font-family: 'Consolas', 'Fira Code', monospace;
+            font-size: 0.85rem;
+            color: #38bdf8;
+            white-space: pre;
+        }
+
+        .copy-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: none;
+            color: var(--text-secondary);
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-cyan);
+            color: #000;
+        }
+
+        /* Interactive Simulator Canvas Widget */
+        .simulator-widget {
+            background: #090e18;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .sim-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .sim-btn {
+            padding: 0.5rem 1.2rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+        }
+
+        .sim-btn.active-sim {
+            background: var(--accent-cyan);
+            color: #000;
+            border-color: var(--accent-cyan);
+        }
+
+        canvas {
+            width: 100%;
+            height: 180px;
+            background: #04070d;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* Calculator Widget */
+        .calc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .calc-field {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .calc-field label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .calc-field input {
+            background: #080c14;
+            border: 1px solid var(--border-color);
+            color: var(--text-primary);
+            padding: 0.6rem 0.8rem;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            outline: none;
+        }
+
+        .calc-field input:focus {
+            border-color: var(--accent-cyan);
+        }
+
+        .calc-result-box {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .calc-result-val {
+            font-size: 1.6rem;
+            font-weight: 900;
+            color: var(--accent-emerald);
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem 1rem;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            border-top: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 1.7rem; }
+            .phase-card { padding: 1.25rem; }
+            .substeps-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- Top Navigation Back to Index -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
+        <a href="../index.html" style="color: var(--accent-cyan); text-decoration: none; font-weight: 700; font-size: 0.9rem; padding: 0.45rem 1rem; background: rgba(6, 182, 212, 0.1); border: 1px solid rgba(6, 182, 212, 0.25); border-radius: var(--radius-sm); display: inline-flex; align-items: center; gap: 0.5rem;">
+            ➔ العودة إلى بوابة المشاريع الرئيسية (Index)
+        </a>
+        <span style="font-size: 0.85rem; color: var(--text-muted);">المشروع الأول (Project 1 of 3)</span>
+    </div>
+
+    <!-- Header -->
+    <header>
+        <div class="badge-tag">
+            <span>⚙️ خارطة طريق مشروع التخرج</span>
+            <span>• 2026</span>
+        </div>
+        <h1>خطة العمل التنفيذية: تطوير نظام الصيانة التنبؤية للمحركات الحثية (PdM)</h1>
+        <p>دليل مرحلي متكامل يبدأ من تحديد البيانات وتوليدها، مروراً بمعالجة الإشارات والذكاء الاصطناعي، وحتى بناء الواجهة وحساب الجدوى الاقتصادية.</p>
+        
+        <div class="meta-stats">
+            <div class="stat-item">🎯 **الهدف النهائي:** <strong>منظومة متكاملة لرصد الأعطال وتوقع العمر (RUL)</strong></div>
+            <div class="stat-item">💻 **البيئة:** <strong>MATLAB / Python / IoT Simulator</strong></div>
+            <div class="stat-item">⏱️ **المدة المقترحة:** <strong>8 - 12 أسابيع</strong></div>
+        </div>
+    </header>
+
+    <!-- Quick Navigation Stepper -->
+    <div class="stepper-nav">
+        <button class="nav-btn active" onclick="scrollToPhase('phase-1', this)">
+            <span class="step-num">1</span>
+            <span>تحديد البيانات</span>
+        </button>
+        <button class="nav-btn" onclick="scrollToPhase('phase-2', this)">
+            <span class="step-num">2</span>
+            <span>التوليد والمصادر</span>
+        </button>
+        <button class="nav-btn" onclick="scrollToPhase('phase-3', this)">
+            <span class="step-num">3</span>
+            <span>معالجة الإشارات</span>
+        </button>
+        <button class="nav-btn" onclick="scrollToPhase('phase-4', this)">
+            <span class="step-num">4</span>
+            <span>تدريب نماذج الذكاء</span>
+        </button>
+        <button class="nav-btn" onclick="scrollToPhase('phase-5', this)">
+            <span class="step-num">5</span>
+            <span>التكامل والمعمارية</span>
+        </button>
+        <button class="nav-btn" onclick="scrollToPhase('phase-6', this)">
+            <span class="step-num">6</span>
+            <span>تطوير الواجهة GUI</span>
+        </button>
+        <button class="nav-btn" onclick="scrollToPhase('phase-7', this)">
+            <span class="step-num">7</span>
+            <span>الجدوى والتقرير</span>
+        </button>
+    </div>
+
+    <!-- PHASE 1 -->
+    <section id="phase-1" class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">📡</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 1: تحديد متطلبات البيانات والمستشعرات (Data Requirements)</h2>
+                    <div class="phase-subtitle">تحديد الإشارات الفيزيائية والمؤشرات الفنية اللازمة لتغطية كافة أجزاء المحرك الحثي</div>
+                </div>
+            </div>
+            <span class="phase-tag">الأسبوع 1</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">1.1 إشارات الاهتزاز (Vibration Signals)</div>
+                <div class="substep-desc">الاهتزاز هو المؤشر الأكثر حساسية لكشف عيوب المحامل (Bearings) وعدم المحاذاة.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تحديد معدل العينات (Sampling Rate): 1,000Hz إلى 12,000Hz لالتقاط الترددات العالية.</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تحديد المحاور: مستشعر تسارع ثلاثي المحاور (Tri-axial Accelerometer X, Y, Z).</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">1.2 إشارات التيار الكهربائي (Motor Current)</div>
+                <div class="substep-desc">لقياس التغيرات في المجال المغناطيسي واكتشاف أعطال الملفات (Stator Windings).</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>مراقبة التيار للأطوار الثلاثة (IA, IB, IC) لكشف عدم اتزان الأطوار (Phase Loss).</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تحديد التردد الأساسي (50Hz / 60Hz) وقمم الهارمونيكس المصاحبة.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">1.3 إشارات الحرارة والسرعة (Thermal & Speed)</div>
+                <div class="substep-desc">مؤشرات مساعدة لتحديد حالات الحمل الزائد وتحديد خط سرعة الدوران.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>درجة حرارة غطاء المحمل وهيكل المحرك (°C).</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>سرعة دوران المحرك (RPM) لتحديد ترددات الأعطال الفعالة.</span></li>
+                </ul>
+            </div>
+        </div>
+
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>نوع الإشارة</th>
+                    <th>المستشعر المعملي المقترح</th>
+                    <th>المستشعر الصناعي المقترح</th>
+                    <th>تردد العينات (Sampling Rate)</th>
+                    <th>نوع العطل المستهدف</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>الاهتزاز</strong></td>
+                    <td>ADXL345 / MPU6050</td>
+                    <td>Fluke 805 / Piezoelectric Sensor</td>
+                    <td><span class="badge-small badge-cyan">10,000 Hz</span></td>
+                    <td>تآكل المحامل، عدم المحاذاة، اختلال التوازن</td>
+                </tr>
+                <tr>
+                    <td><strong>التيار الكهربائي</strong></td>
+                    <td>ACS712 / SCT-013</td>
+                    <td>Current Transformer (CT) Industrial</td>
+                    <td><span class="badge-small badge-amber">1,000 Hz</span></td>
+                    <td>احتراق الملفات، قصر اللفات، انقطاع الفازة</td>
+                </tr>
+                <tr>
+                    <td><strong>الحرارة</strong></td>
+                    <td>DS18B20 / LM35</td>
+                    <td>Infrared Thermocouple PT100</td>
+                    <td><span class="badge-small badge-purple">1 Hz</span></td>
+                    <td>الحمل الحراري الزائد، جفاف التزييت</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <!-- PHASE 2 -->
+    <section id="phase-2" class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">🎲</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 2: استحواذ وتوليد البيانات (Data Acquisition & Synthetic Generation)</h2>
+                    <div class="phase-subtitle">تجهيز بيانات التدريب عبر المسار الأكاديمي (المحاكاة) والمسار العالمي المفتوح</div>
+                </div>
+            </div>
+            <span class="phase-tag">الأسبوع 2 - 3</span>
+        </div>
+
+        <div class="substeps-grid">
+            <!-- Option 1 Card -->
+            <div class="substep-box" style="border: 1px solid rgba(6, 182, 212, 0.4); background: rgba(6, 182, 212, 0.04);">
+                <div class="substep-title">
+                    <span>🟢 الخيار الأول: التوليد الاصطناعي (Python Synthetic Generator)</span>
+                </div>
+                <div class="substep-desc">توليد إشارات اهتزاز، تيار كهربائي ثلاثي الأطوار، ودرجات حرارة محاكاة بالفيزياء والرياضيات لاختبار النماذج وخوارزميات كشف الشذوذ وتوقع العمر (RUL).</div>
+                
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>سكريبت متقدم ومرن <code>generate_synthetic_motor_data.py</code> يدعم التوليد الفوري والمخصص.</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>توليد ملفات CSV للمحرك السليم، عطل المحامل، عطل الملفات، ومتسلسلات RUL طويلة المدى.</span></li>
+                </ul>
+
+                <!-- Flexibility & Duration Callout -->
+                <div style="margin: 0.8rem 0; padding: 0.75rem; background: rgba(6, 182, 212, 0.08); border-radius: 6px; border-right: 3px solid var(--accent-cyan); font-size: 0.82rem; line-height: 1.6;">
+                    <div style="font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.3rem;">💡 هل التوليد ثابت أم حسب الحاجة (أيام / أسابيع / أشهر)؟</div>
+                    <div>
+                        <strong>يدعم النمطين معاً:</strong>
+                        <br>• <strong>النمط السريع:</strong> يولد الحزم القياسية الأربعة المباشرة بنقرة واحدة لاختبار الكود والتدريب السريع.
+                        <br>• <strong>النمط المخصص:</strong> يمكنك تحديد أي مدة زمنية عبر سطر الأوامر (بالساعات، <strong>الأيام مثل أسبوع</strong>، أو <strong>الأشهر مثل شهر/3 أشهر</strong>) مع ضبط معدل أخذ العينات ونوع العطل.
+                    </div>
+                </div>
+
+                <!-- Documentation Links -->
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+                    <a href="data_acquisition/README_data_acquisition.html" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-size: 0.82rem; padding: 0.35rem 0.7rem; background: rgba(6,182,212,0.15); border-radius: 4px; font-weight: 700; border: 1px solid rgba(6,182,212,0.3); display: inline-flex; align-items: center; gap: 0.4rem;">
+                        🌐 فتح الدليل الشامل كـ HTML
+                    </a>
+                    <a href="data_acquisition/README_data_acquisition.md" target="_blank" style="color: #f59e0b; text-decoration: none; font-size: 0.82rem; padding: 0.35rem 0.7rem; background: rgba(245,158,11,0.15); border-radius: 4px; border: 1px solid rgba(245,158,11,0.3); font-weight: 700;">
+                        📘 فتح كـ Markdown (.md)
+                    </a>
+                </div>
+
+                <!-- CLI Execution Commands Snippet -->
+                <div style="background: #060911; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 0.75rem; margin-bottom: 0.8rem; font-family: 'Consolas', monospace; direction: ltr; text-align: left; font-size: 0.78rem; color: #38bdf8; line-height: 1.5;">
+                    <div style="color: #94a3b8; font-size: 0.75rem; direction: rtl; text-align: right; margin-bottom: 0.3rem; font-family: 'Cairo', sans-serif;">💻 أمثلة أوامر التشغيل من Terminal:</div>
+                    <div style="color: #64748b;"># 1. التشغيل الافتراضي السريع (يولد الملفات الأربعة فوراً):</div>
+                    <div>python data_acquisition/generate_synthetic_motor_data.py</div>
+                    <div style="color: #64748b; margin-top: 0.3rem;"># 2. توليد مراقبة تدهور لمدة 7 أيام (أسبوع كامل):</div>
+                    <div>python data_acquisition/generate_synthetic_motor_data.py --mode rul --duration 7 --unit days</div>
+                    <div style="color: #64748b; margin-top: 0.3rem;"># 3. توليد مراقبة لشهر كامل (30 يوماً / 720 ساعة):</div>
+                    <div>python data_acquisition/generate_synthetic_motor_data.py --mode rul --duration 1 --unit months</div>
+                </div>
+
+                <!-- Output Schemas Breakdown -->
+                <div style="background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.06); border-radius: 6px; padding: 0.7rem; margin-bottom: 0.8rem; font-size: 0.78rem; color: var(--text-secondary);">
+                    <div style="font-weight: 700; color: var(--text-primary); margin-bottom: 0.3rem;">📊 أشكال ومحتوى المخرجات (Output Schemas):</div>
+                    <div style="margin-bottom: 0.3rem;">
+                        🔹 <strong>ملفات الإشارات اللحظية (Waveforms):</strong> <code>time_sec</code>، <code>vibration_x_g</code>، <code>vibration_y_g</code>، <code>current_Ia/Ib/Ic</code>، <code>temperature_c</code>، <code>fault_label</code>.
+                    </div>
+                    <div>
+                        🔹 <strong>ملفات متسلسلة التدهور (RUL):</strong> <code>operating_hours</code>، <code>rms_vibration</code>، <code>crest_factor</code>، <code>kurtosis</code>، <code>avg_temperature_c</code>، <code>health_index</code>، <code>RUL_hours</code>، <code>status</code>.
+                    </div>
+                </div>
+
+                <!-- File Links Box for Option 1 -->
+                <div style="padding: 0.8rem; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px dashed rgba(6,182,212,0.4);">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.6rem;">📂 الأكواد والملفات التوليدية الجاهزة (الخيار 1):</div>
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem;">
+                        <a href="data_acquisition/generate_synthetic_motor_data.py" target="_blank" style="color: #06b6d4; text-decoration: none; font-weight: 700; background: rgba(6,182,212,0.1); padding: 0.3rem 0.6rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.4rem; width: fit-content;">
+                            📄 <code>generate_synthetic_motor_data.py</code> <span class="badge-small badge-cyan">كود البايثون المطور</span>
+                        </a>
+                        
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.4rem; margin-top: 0.3rem;">
+                            <a href="data_acquisition/generated_datasets/synthetic_motor_normal.csv" target="_blank" style="color: var(--text-primary); text-decoration: none; background: rgba(255,255,255,0.05); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.08);">
+                                📥 تحميل الملف: <strong>synthetic_motor_normal.csv</strong> (سليم)
+                            </a>
+                            <a href="data_acquisition/generated_datasets/synthetic_motor_bearing_fault.csv" target="_blank" style="color: var(--text-primary); text-decoration: none; background: rgba(255,255,255,0.05); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.08);">
+                                📥 تحميل الملف: <strong>synthetic_motor_bearing_fault.csv</strong> (عطل محامل)
+                            </a>
+                            <a href="data_acquisition/generated_datasets/synthetic_motor_stator_fault.csv" target="_blank" style="color: var(--text-primary); text-decoration: none; background: rgba(255,255,255,0.05); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.08);">
+                                📥 تحميل الملف: <strong>synthetic_motor_stator_fault.csv</strong> (عطل ملفات)
+                            </a>
+                            <a href="data_acquisition/generated_datasets/synthetic_motor_rul_degradation.csv" target="_blank" style="color: var(--text-primary); text-decoration: none; background: rgba(255,255,255,0.05); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.08);">
+                                📥 تحميل الملف: <strong>synthetic_motor_rul_degradation.csv</strong> (تدهور RUL - 100 س)
+                            </a>
+                            <a href="data_acquisition/generated_datasets/synthetic_rul_7_days.csv" target="_blank" style="color: var(--accent-emerald); text-decoration: none; background: rgba(16,185,129,0.1); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(16,185,129,0.3); font-weight: 700;">
+                                📥 تحميل الملف: <strong>synthetic_rul_7_days.csv</strong> (أسبوع كامل)
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 2 Card -->
+            <div class="substep-box" style="border: 1px solid rgba(139, 92, 246, 0.3); background: rgba(139, 92, 246, 0.03);">
+                <div class="substep-title">
+                    <span>🔵 الخيار الثاني: قواعد البيانات العالمية (Benchmark Datasets)</span>
+                </div>
+                <div class="substep-desc">استيراد وقراءة قواعد البيانات المعتمدة عالمياً لأبحاث الماجستير والدكتوراه (CWRU & NASA).</div>
+                
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>داتا سيت <strong>CWRU Bearing Dataset</strong> (جامعة كيس ويسترن ريسرف).</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>داتا سيت <strong>NASA Prognostics Data Repository</strong> (نمذجة تدهور العمر RUL).</span></li>
+                </ul>
+
+                <!-- File Links Box for Option 2 -->
+                <div style="margin-top: 1rem; padding: 0.85rem; background: rgba(0,0,0,0.3); border-radius: 8px; border: 1px dashed rgba(139,92,246,0.4);">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-purple); margin-bottom: 0.6rem;">📂 دليل التوثيق والبيانات المعتمدة:</div>
+                    
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+                        <a href="data_acquisition/README_data_acquisition.html" target="_blank" style="color: var(--accent-cyan); text-decoration: none; font-size: 0.82rem; padding: 0.3rem 0.6rem; background: rgba(6,182,212,0.15); border-radius: 4px; font-weight: 700; border: 1px solid rgba(6,182,212,0.3);">
+                            🌐 فتح الدليل الشامل كـ HTML
+                        </a>
+                        <a href="data_acquisition/README_data_acquisition.md" target="_blank" style="color: #f59e0b; text-decoration: none; font-size: 0.82rem; padding: 0.3rem 0.6rem; background: rgba(245,158,11,0.15); border-radius: 4px; border: 1px solid rgba(245,158,11,0.3);">
+                            📘 فتح كـ Markdown (.md)
+                        </a>
+                    </div>
+
+                    <!-- Dataset 1 Details: CWRU -->
+                    <div style="background: rgba(255,255,255,0.02); padding: 0.75rem; border-radius: 6px; margin-bottom: 0.6rem; border: 1px solid rgba(255,255,255,0.05);">
+                        <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
+                            1️⃣ داتا سيت CWRU Bearing Dataset
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.3rem;">
+                            🌐 <strong>المصدر والرابط الرسمي:</strong> <a href="http://caseds.case.edu/" target="_blank" style="color: var(--accent-cyan);">Case Western Reserve University Bearing Data Center</a>
+                        </div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            📌 <strong>نبذة عن الحقول:</strong> <code>DE_time_Normal</code> (اهتزاز محرك سليم)، <code>DE_time_InnerRaceFault</code> (عطل حلقة داخلية)، <code>DE_time_OuterRaceFault</code> (عطل حلقة خارجية)، <code>DE_time_BallFault</code> (عطل كرات المحمل).
+                        </div>
+                        <a href="data_acquisition/benchmark_datasets/CWRU_Bearing_Data/CWRU_Benchmark_Sample.csv" target="_blank" style="color: var(--accent-emerald); text-decoration: none; font-size: 0.82rem; font-weight: 700; padding: 0.35rem 0.7rem; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 4px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                            📥 تحميل الملف: <strong>CWRU_Benchmark_Sample.csv</strong>
+                        </a>
+                    </div>
+
+                    <!-- Dataset 2 Details: NASA -->
+                    <div style="background: rgba(255,255,255,0.02); padding: 0.75rem; border-radius: 6px; border: 1px solid rgba(255,255,255,0.05);">
+                        <div style="font-size: 0.88rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.2rem;">
+                            2️⃣ داتا سيت ناسا لتوقع العمر (NASA Prognostics Repository)
+                        </div>
+                        <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.3rem;">
+                            🌐 <strong>المصدر والرابط الرسمي:</strong> <a href="https://data.nasa.gov/" target="_blank" style="color: var(--accent-purple);">NASA Data Portal & Prognostics Center</a>
+                        </div>
+                        <div style="font-size: 0.78rem; color: var(--text-muted); margin-bottom: 0.5rem;">
+                            📌 <strong>نبذة عن الحقول:</strong> <code>engine_unit</code> (رقم المحرك)، <code>cycle_number</code> (ساعات التشغيل)، <code>vibration_rms</code> (طاقة الاهتزاز)، <code>temperature_c</code> (الحرارة)، <code>RUL_cycles</code> (العمر المتبقي).
+                        </div>
+                        <a href="data_acquisition/benchmark_datasets/NASA_Prognostics_Data/NASA_FD001_Bearing_Degradation.csv" target="_blank" style="color: var(--accent-emerald); text-decoration: none; font-size: 0.82rem; font-weight: 700; padding: 0.35rem 0.7rem; background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); border-radius: 4px; display: inline-flex; align-items: center; gap: 0.4rem;">
+                            📥 تحميل الملف: <strong>NASA_FD001_Bearing_Degradation.csv</strong>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interactive Simulator Widget inside Phase 2 -->
+        <div class="simulator-widget">
+            <div style="font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.5rem; font-size: 0.95rem;">
+                🎮 محاكي تفاعلي لإشارات المحرك (Time Domain Simulator)
+            </div>
+            <div class="sim-controls">
+                <button class="sim-btn active-sim" onclick="runSimulation('normal', this)">إشارة محرك سليم (Normal Signal)</button>
+                <button class="sim-btn" onclick="runSimulation('fault', this)">إشارة محرك به عطل محامل (Faulty Signal)</button>
+                <span style="font-size: 0.85rem; color: var(--text-muted);">انقر لملاحظة الفرق في قمم الاهتزاز والضوضاء</span>
+            </div>
+            <canvas id="simCanvas"></canvas>
+        </div>
+
+        <!-- Code Box -->
+        <div class="code-box">
+            <header>
+                <span style="color: var(--text-secondary); font-size: 0.8rem;">MATLAB & Python Data Generation Snippet</span>
+                <button class="copy-btn" onclick="copyCode(this)">نسخ الكود</button>
+            </header>
+<code># Python Data Generation Snippet
+import numpy as np, pandas as pd
+t = np.linspace(0, 2, 2000)
+vibration_normal = np.sin(2 * np.pi * 50 * t) + 0.4 * np.random.randn(len(t))
+vibration_fault = vibration_normal + 1.6 * np.sin(2 * np.pi * 120 * t)</code>
+        </div>
+    </section>
+
+    <!-- PHASE 3 -->
+    <section id="phase-3" class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">🧠</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 3: معالجة الإشارات وهندسة الميزات (Signal Processing & Feature Extraction)</h2>
+                    <div class="phase-subtitle">تنقية الإشارات وتحويلها من النطاق الزمني إلى النطاق الترددي واستخراج المؤشرات الإحصائية</div>
+                </div>
+            </div>
+            <span class="phase-tag">الأسبوع 4 - 5</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">3.1 معالجة النطاق الترددي (Fast Fourier Transform - FFT)</div>
+                <div class="substep-desc">تحويل الإشارات المعقدة من الزمن إلى التردد لرصد الترددات المسؤولة عن الأعطال.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تطبيق تحويل فورير السريع `fft()` لحساب طيف السعة (Magnitude Spectrum).</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>استخراج تردد بصمة العطل (Fault Signature Frequency Peak) عند 120Hz.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">3.2 استخراج الميزات الإحصائية (Time-Domain Health Indicators)</div>
+                <div class="substep-desc">حساب المؤشرات التي تعكس الحالة العامة وصحة الآلة قبل التحلل الترددي.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span><strong>RMS (جذر متوسط المربعات):</strong> لقياس الطاقة الإجمالية للاهتزاز.</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span><strong>Crest Factor (عامل القمة):</strong> لكشف الصدمات المبكرة وتآكل المحامل.</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span><strong>Kurtosis (التفرطح):</strong> قياس مدى حدة القمم للكشف عن بداية الشروخ.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">3.3 المعالجة المتقدمة (Continuous Wavelet Transform - CWT)</div>
+                <div class="substep-desc">مهم للتقارير والأبحاث المتقدمة للتعامل مع السرعات المتغيرة للآلة.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>إنشاء الخريطة الزمنية-الترددية (Scalogram) لرؤية تغير العطل مع الزمن.</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 4 -->
+    <section id="phase-4" class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">🤖</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 4: تدريب نماذج الذكاء الاصطناعي (AI Modeling & Anomaly Detection)</h2>
+                    <div class="phase-subtitle">تدريب نماذج كشف الشذوذ وتوقع العمر الافتراضي المتبقي (RUL)</div>
+                </div>
+            </div>
+            <span class="phase-tag">الأسبوع 6 - 7</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">4.1 نموذج كشف الشذوذ المبكر (Anomaly Detection Model)</div>
+                <div class="substep-desc">التدريب على بيانات المحرك السليمة فقط (Baseline) لتصنيف أي انحراف كشذوذ.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تطوير نموذج <strong>Isolation Forest</strong> أو <strong>One-Class SVM</strong>.</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>ضبط حد العتبة (Score Threshold) لإطلاق الإنذار التنبئي عند تجاوز القيمة السليمة.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">4.2 نموذج توقع العمر الافتراضي المتبقي (RUL Modeling)</div>
+                <div class="substep-desc">تتبع التدهور التدريجي للمعدة عبر الزمن والتنبؤ بالساعات المتبقية للفشل.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تدريب شبكة عصبيّة متكررة من نوع <strong>LSTM (Long Short-Term Memory)</strong> على البيانات الزمنية.</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>رسم منحنى التدهور الأسي (Exponential Degradation Curve) وحساب RUL بالساعات.</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 5 -->
+    <section id="phase-5" class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">🏗️</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 5: التكامل وتصميم المعمارية (System Architecture Integration)</h2>
+                    <div class="phase-subtitle">ربط طبقة جمع البيانات بالمعالجة المحلية والسحابية (Edge to Cloud Architecture)</div>
+                </div>
+            </div>
+            <span class="phase-tag">الأسبوع 8</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">5.1 المعالجة عند الحافة (Edge Computing Layer)</div>
+                <div class="substep-desc">تصفية الضوضاء وتنفيذ حسابات FFT محلياً على المتحكم قبل الإرسال.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>محاكاة أو تطبيق خوارزمية المعالجة على Raspberry Pi 4/5 أو Arduino.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">5.2 طبقة التخزين السحابي (Cloud Data Series)</div>
+                <div class="substep-desc">تخزين المتسلسلات الزمنية للمؤشرات المجمعة.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>ربط البيانات بقاعدة بيانات <strong>InfluxDB</strong> الزمنية أو خدمات AWS/Azure IoT.</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 6 -->
+    <section id="phase-6" class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">🖥️</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 6: تصميم واجهة التطبيق والتحكم (MATLAB App Designer / GUI)</h2>
+                    <div class="phase-subtitle">بناء واجهة مستخدم تفاعلية تمثل غرف التحكم الصناعية (SCADA Simulation)</div>
+                </div>
+            </div>
+            <span class="phase-tag">الأسبوع 9 - 10</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">6.1 الهيكل البصري للواجهة (Front-End Layout)</div>
+                <div class="substep-desc">إضافة العناصر الرسمية في MATLAB App Designer.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>إضافة `UIAxesTime` لرسم إشارة الاهتزاز الزمنية.</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>إضافة `UIAxesFFT` لرسم طيف الترددات الحالية.</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>إضافة `StatusLamp` (أخضر=سليم، أحمر=عطل) و `Button` لبدء المراقبة.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">6.2 الربط البرمجي للواجهة (Back-End Callbacks)</div>
+                <div class="substep-desc">ربط الأزرار والمخططات بكود التحليل واكتشاف الشذوذ تلقائياً.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>برمجة دالة `StartButtonPushed` لتوليد/قراءة الإشارة وتحليل الترددات وربط اللمبة التنبيهية.</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 7 -->
+    <section id="phase-7" class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">📈</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 7: دراسة الجدوى والتقرير النهائي (Feasibility & Final Report)</h2>
+                    <div class="phase-subtitle">تقييم دقة النموذج وحساب العائد على الاستثمار وإعداد التقرير التنافسي للمناقشة</div>
+                </div>
+            </div>
+            <span class="phase-tag">الأسبوع 11 - 12</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">7.1 دراسة الجدوى وحساب ROI</div>
+                <div class="substep-desc">إثبات الأثر الاقتصادي للمشروع بمقارنة تكلفة بناء النظام مع خسائر توقف المصنع.</div>
+                
+                <!-- Calculator Widget -->
+                <div class="calc-grid">
+                    <div class="calc-field">
+                        <label>تكلفة توقف المصنع ($/ساعة):</label>
+                        <input type="number" id="downtimeCost" value="5000" oninput="calculateROI()">
+                    </div>
+                    <div class="calc-field">
+                        <label>تكلفة بناء نظام PdM الإجمالية ($):</label>
+                        <input type="number" id="pdmCost" value="1200" oninput="calculateROI()">
+                    </div>
+                    <div class="calc-result-box">
+                        <div style="font-size: 0.8rem; color: var(--text-secondary);">العائد والوفر المتوقع لـ 5 ساعات توقف:</div>
+                        <div class="calc-result-val" id="roiVal">$23,800</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">7.2 التقرير النهائى وعرض المناقشة (Viva Presentation)</div>
+                <div class="substep-desc">تجميع النتائج والأكواد والرسومات البيانية في كتاب المشروع النهائي.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>صياغة الفصول: (المقدمة، المراجعة المرجعية، المعمارية، النتائج والمعالجة، الجدوى الاقتصادية).</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تجهيز العرض التقديمي (PowerPoint/Slide Deck) مع تسجيل فيديو دقيقة للمحاكي والواجهة التفاعلية.</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>تم إعداد وتنسيق خطة العمل التفاعلية لمشروع التخرج • الصيانة التنبؤية للمحركات الحثية (PdM) • 2026</p>
+    </footer>
+</div>
+
+<script>
+    // Scroll To Phase
+    function scrollToPhase(phaseId, btn) {
+        document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const element = document.getElementById(phaseId);
+        if (element) {
+            element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+    }
+
+    // Copy Code Helper
+    function copyCode(btn) {
+        const codeText = btn.parentElement.nextElementSibling.innerText;
+        navigator.clipboard.writeText(codeText).then(() => {
+            btn.innerText = 'تم النسخ!';
+            setTimeout(() => { btn.innerText = 'نسخ الكود'; }, 2000);
+        });
+    }
+
+    // Canvas Simulator Logic
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+    let currentSim = 'normal';
+
+    function resizeCanvas() {
+        canvas.width = canvas.parentElement.clientWidth - 40;
+        canvas.height = 160;
+        drawSignal();
+    }
+
+    function runSimulation(mode, btn) {
+        document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active-sim'));
+        btn.classList.add('active-sim');
+        currentSim = mode;
+        drawSignal();
+    }
+
+    function drawSignal() {
+        if (!canvas.width) return;
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.moveTo(0, canvas.height / 2);
+        ctx.lineTo(canvas.width, canvas.height / 2);
+        ctx.stroke();
+
+        ctx.beginPath();
+        ctx.lineWidth = 2;
+        ctx.strokeStyle = (currentSim === 'normal') ? '#06b6d4' : '#f43f5e';
+
+        const points = canvas.width;
+        for (let x = 0; x < points; x++) {
+            const t = x / 40;
+            let y = Math.sin(t); // Normal 50Hz wave
+            
+            if (currentSim === 'normal') {
+                y += (Math.random() - 0.5) * 0.3; // Low noise
+            } else {
+                y += Math.sin(t * 2.4) * 1.5; // High 120Hz fault frequency spike
+                y += (Math.random() - 0.5) * 0.7; // Higher vibration noise
+            }
+
+            const canvasY = (canvas.height / 2) - (y * 30);
+            if (x === 0) ctx.moveTo(x, canvasY);
+            else ctx.lineTo(x, canvasY);
+        }
+        ctx.stroke();
+    }
+
+    // ROI Calculator
+    function calculateROI() {
+        const downtime = parseFloat(document.getElementById('downtimeCost').value) || 0;
+        const pdmCost = parseFloat(document.getElementById('pdmCost').value) || 0;
+        const savedHours = 5; // Assuming 5 hours of prevented downtime
+        
+        const totalSaved = (downtime * savedHours) - pdmCost;
+        document.getElementById('roiVal').innerText = '$' + totalSaved.toLocaleString();
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    window.addEventListener('DOMContentLoaded', () => {
+        resizeCanvas();
+        calculateROI();
+    });
+</script>
+
+</body>
+</html>

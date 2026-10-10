@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بوابة مقترحات مشاريع التخرج الهندسية المتقدمة (AI & Predictive Engineering Portal)</title>
+    <!-- Google Fonts: Cairo & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Outfit:wght@400;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #070b14;
+            --bg-card: #0f172a;
+            --bg-card-hover: #17233f;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-cyan: #06b6d4;
+            --accent-orange: #f97316;
+            --accent-emerald: #10b981;
+            --accent-purple: #8b5cf6;
+            --accent-blue: #3b82f6;
+            --accent-amber: #f59e0b;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --radius-xl: 20px;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+            --shadow-glow: 0 0 35px rgba(6, 182, 212, 0.12);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.8;
+            padding: 2.5rem 1rem;
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 20% 15%, rgba(6, 182, 212, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(249, 115, 22, 0.06) 0%, transparent 40%),
+                radial-gradient(circle at 50% 50%, rgba(16, 185, 129, 0.05) 0%, transparent 50%);
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        /* Hero Header */
+        header {
+            text-align: center;
+            padding: 3.5rem 1.5rem;
+            background: rgba(15, 23, 42, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-xl);
+            margin-bottom: 3rem;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 400px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--accent-cyan), var(--accent-orange), var(--accent-emerald), transparent);
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.6rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            color: var(--accent-cyan);
+            padding: 0.4rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 20%, #94a3b8 70%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            max-width: 880px;
+            margin: 0 auto 1.5rem auto;
+            line-height: 1.7;
+        }
+
+        .stat-pills-row {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 1.5rem;
+        }
+
+        .stat-pill {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--border-color);
+            padding: 0.5rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .stat-pill strong {
+            color: var(--text-primary);
+        }
+
+        /* Section Titles */
+        .section-header {
+            margin-bottom: 1.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.7rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 0.7rem;
+        }
+
+        /* Bento Grid Layout */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(360px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3.5rem;
+        }
+
+        .project-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .project-card.card-cyan::before { background: linear-gradient(90deg, var(--accent-cyan), var(--accent-blue)); }
+        .project-card.card-orange::before { background: linear-gradient(90deg, var(--accent-orange), var(--accent-amber)); }
+        .project-card.card-emerald::before { background: linear-gradient(90deg, var(--accent-emerald), var(--accent-cyan)); }
+
+        .project-card:hover {
+            transform: translateY(-6px);
+            background: var(--bg-card-hover);
+            border-color: rgba(255, 255, 255, 0.18);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+        }
+
+        .card-top {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            margin-bottom: 1.2rem;
+        }
+
+        .card-icon {
+            width: 54px;
+            height: 54px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.7rem;
+        }
+
+        .icon-cyan { background: rgba(6, 182, 212, 0.12); border: 1px solid rgba(6, 182, 212, 0.3); color: var(--accent-cyan); }
+        .icon-orange { background: rgba(249, 115, 22, 0.12); border: 1px solid rgba(249, 115, 22, 0.3); color: var(--accent-orange); }
+        .icon-emerald { background: rgba(16, 185, 129, 0.12); border: 1px solid rgba(16, 185, 129, 0.3); color: var(--accent-emerald); }
+
+        .status-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 700;
+        }
+
+        .badge-ready { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); border: 1px solid rgba(16, 185, 129, 0.3); }
+        .badge-planned { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); border: 1px solid rgba(245, 158, 11, 0.3); }
+
+        .card-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin-bottom: 0.4rem;
+            line-height: 1.4;
+        }
+
+        .card-subtitle {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            margin-bottom: 1rem;
+        }
+
+        .card-desc {
+            color: var(--text-secondary);
+            font-size: 0.94rem;
+            line-height: 1.7;
+            margin-bottom: 1.4rem;
+        }
+
+        .tech-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.45rem;
+            margin-bottom: 1.8rem;
+        }
+
+        .tech-tag {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #cbd5e1;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .card-action-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.6rem;
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border-radius: var(--radius-md);
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: all 0.25s ease;
+        }
+
+        .btn-cyan {
+            background: rgba(6, 182, 212, 0.15);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.35);
+        }
+        .btn-cyan:hover {
+            background: var(--accent-cyan);
+            color: #000;
+            box-shadow: 0 0 20px rgba(6, 182, 212, 0.4);
+        }
+
+        .btn-orange {
+            background: rgba(249, 115, 22, 0.15);
+            color: var(--accent-orange);
+            border: 1px solid rgba(249, 115, 22, 0.35);
+        }
+        .btn-orange:hover {
+            background: var(--accent-orange);
+            color: #000;
+            box-shadow: 0 0 20px rgba(249, 115, 22, 0.4);
+        }
+
+        .btn-emerald {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-emerald);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+        }
+        .btn-emerald:hover {
+            background: var(--accent-emerald);
+            color: #000;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* Comparison Section */
+        .comparison-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.2rem;
+            margin-bottom: 3rem;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .custom-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            text-align: right;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+
+        .custom-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+            vertical-align: middle;
+        }
+
+        .custom-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        footer {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+            color: var(--text-muted);
+            font-size: 0.9rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <!-- HERO HEADER -->
+    <header>
+        <div class="hero-badge">
+            <span>🎓 بوابة مقترحات مشاريع التخرج والأبحاث الهندسية</span>
+            <span>• 2026</span>
+        </div>
+        <h1>المنظومات التنبؤية والتوائم الرقمية في الهندسة والذكاء الاصطناعي</h1>
+        <p class="hero-subtitle">
+            ثلاثة مقترحات مشاريع تخرج نوعية ورفيعة المستوى تجمع بين <strong>الهندسة الفيزيائية التطبيقية، الذكاء الاصطناعي الصناعي، وتوقع الأعطال (Prognostics)</strong> لحل مشاكل صناعية واقعية واستراتيجية.
+        </p>
+
+        <div class="stat-pills-row">
+            <div class="stat-pill">⚙️ <strong>3 مشاريع تخرج</strong> متكاملة المراحل</div>
+            <div class="stat-pill">🤖 <strong>محركات تنبؤية بالذكاء الاصطناعي</strong> (LSTM, PINN, XGBoost)</div>
+            <div class="stat-pill">📊 <strong>داتا سيت معتمدة عالمياً</strong> (NASA, CWRU, Oxford)</div>
+            <div class="stat-pill">🏭 <strong>تطبيقات صناعية واقعية</strong> (محركات، مصفاة بانياس، بطاريات Li-ion)</div>
+        </div>
+    </header>
+
+    <!-- PROJECTS SECTION -->
+    <div class="section-header">
+        <h2 class="section-title">💼 استعراض المشاريع الثلاثة وخارطة الطريق لكل منها</h2>
+        <span style="font-size: 0.9rem; color: var(--text-muted);">انقر على أي مشروع لفتح خطة عمله التفصيلية والملفات المرفقة</span>
+    </div>
+
+    <div class="projects-grid">
+        <!-- PROJECT 1 CARD -->
+        <div class="project-card card-cyan">
+            <div>
+                <div class="card-top">
+                    <div class="card-icon icon-cyan">⚡</div>
+                    <span class="status-badge badge-ready">جاهز بالكامل ومجهز بالبيانات والأكواد</span>
+                </div>
+                <h3 class="card-title">1. الصيانة التنبؤية للمحركات الحثية ثلاثية الأطوار</h3>
+                <div class="card-subtitle">Predictive Maintenance for 3-Phase Induction Motors</div>
+                <p class="card-desc">
+                    نظام ذكي متكامل يبدأ من جمع إشارات الاهتزاز والتيار ثلاثي الأطوار والحرارة، واستخراج ميزات الترددات (FFT / MCSA)، وتصنيف أعطال المحامل والملفات، مع حساب العمر الافتراضي المتبقي (RUL) لتقليل زمن التوقف غير المخطط له بنسبة 60%.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Python Generator</span>
+                    <span class="tech-tag">CWRU Dataset</span>
+                    <span class="tech-tag">NASA RUL</span>
+                    <span class="tech-tag">Signal Processing FFT</span>
+                    <span class="tech-tag">Random Forest & LSTM</span>
+                    <span class="tech-tag">Edge Computing</span>
+                </div>
+            </div>
+            <div>
+                <div style="font-size: 0.8rem; color: var(--accent-cyan); margin-bottom: 0.6rem; font-weight: 700;">
+                    📂 يتضمن مجلداً كاملاً للأكواد التوليدية والبيانات الاصطناعية والعالمية
+                </div>
+                <a href="project_1_induction_motor_pdm/خطة_عمل_مشروع_الصيانة_التنبؤية.html" class="card-action-btn btn-cyan">
+                    🚀 فتح خطة العمل ومجلد الأكواد والبيانات
+                </a>
+            </div>
+        </div>
+
+        <!-- PROJECT 2 CARD -->
+        <div class="project-card card-orange">
+            <div>
+                <div class="card-top">
+                    <div class="card-icon icon-orange">🛢️</div>
+                    <span class="status-badge badge-ready">جاهز بالكامل ومجهز بالبيانات والأكواد</span>
+                </div>
+                <h3 class="card-title">2. التوأم الرقمي لمصفاة بانياس للنفط لتجنب التوقف الكلي</h3>
+                <div class="card-subtitle">Predictive Digital Twin for Baniyas Oil Refinery</div>
+                <p class="card-desc">
+                    بناء توأم رقمي هجين (فيزيائي + AI) لمجمع التقطير الجوي (CDU) وشبكة المبادلات والأفران في <strong>مصفاة بانياس بسوريا</strong>، للتنبؤ بظواهر التكلس الهيدروكربوني (Fouling/Coking) وتآكل الأنابيب، مع خوارزمية ذكية لجدولة الصيانة المتوازية (Bypass) دون إطفاء المصفاة إطلاقاً.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Digital Twin</span>
+                    <span class="tech-tag">Baniyas Refinery</span>
+                    <span class="tech-tag">Heat Exchanger Fouling</span>
+                    <span class="tech-tag">Ebert-Panchal Model</span>
+                    <span class="tech-tag">Zero-Shutdown Maintenance</span>
+                    <span class="tech-tag">Refinery Generator</span>
+                </div>
+            </div>
+            <div>
+                <div style="font-size: 0.8rem; color: var(--accent-orange); margin-bottom: 0.6rem; font-weight: 700;">
+                    📂 يتضمن مجلداً كاملاً للأكواد التوليدية، بيانات مصفاة بانياس، ومحاكياً تفاعلياً حياً
+                </div>
+                <a href="project_2_refinery_digital_twin/خطة_عمل_التوأم_الرقمي_لمصفاة_بانياس.html" class="card-action-btn btn-orange">
+                    🛢️ فتح خطة العمل ومجلد الأكواد والبيانات
+                </a>
+            </div>
+        </div>
+
+        <!-- PROJECT 3 CARD -->
+        <div class="project-card card-emerald">
+            <div>
+                <div class="card-top">
+                    <div class="card-icon icon-emerald">🔋</div>
+                    <span class="status-badge badge-ready">جاهز بالكامل ومجهز بالبيانات والأكواد</span>
+                </div>
+                <h3 class="card-title">3. التنبؤ بصحة وعمر بطاريات الليثيوم (BMS)</h3>
+                <div class="card-subtitle">Lithium-ion Battery SOH & RUL Prognostics (PINN AI)</div>
+                <p class="card-desc">
+                    تطوير نظام إدارة بطاريات تنبؤي فائق التطور (Predictive BMS) لمنظومات الطاقة الشمسية والسيارات الكهربائية؛ يتنبأ بنسبة السعة المتبقية (SOH)، ويحسب عدد دورات الشحن المتبقية (RUL)، ويطلق إنذاراً مبكراً بالهروب الحراري وخطر الحريق قبل ساعات من حدوثه.
+                </p>
+                <div class="tech-tags">
+                    <span class="tech-tag">Clean Energy BESS</span>
+                    <span class="tech-tag">Electric Vehicles EV</span>
+                    <span class="tech-tag">Battery Generator</span>
+                    <span class="tech-tag">NASA Battery Data</span>
+                    <span class="tech-tag">Deep Learning LSTM</span>
+                    <span class="tech-tag">Thermal Runaway Alert</span>
+                </div>
+            </div>
+            <div>
+                <div style="font-size: 0.8rem; color: var(--accent-emerald); margin-bottom: 0.6rem; font-weight: 700;">
+                    📂 يتضمن مجلداً كاملاً للأكواد التوليدية، بيانات ناسا المعتمدة، ومحاكياً تفاعلياً حياً
+                </div>
+                <a href="project_3_battery_energy_pdm/خطة_عمل_التنبؤ_بصحة_وعمر_بطاريات_الليثيوم.html" class="card-action-btn btn-emerald">
+                    🔋 فتح خطة العمل ومجلد الأكواد والبيانات
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- COMPARISON TABLE SECTION -->
+    <section class="comparison-section">
+        <h2 style="font-size: 1.4rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">
+            📊 دليل المقارنة الاستشاري بين المشاريع الثلاثة
+        </h2>
+        <p style="color: var(--text-secondary); font-size: 0.95rem;">
+            جدول تحليلي لمساعدة الطالب والمشرف الأكاديمي على اختيار المشروع الأنسب بحسب التخصص والموارد:
+        </p>
+
+        <div style="overflow-x: auto;">
+            <table class="custom-table">
+                <thead>
+                    <tr>
+                        <th>المعيار</th>
+                        <th>المشروع 1: المحركات الحثية (PdM)</th>
+                        <th>المشروع 2: مصفاة بانياس (Digital Twin)</th>
+                        <th>المشروع 3: بطاريات الليثيوم (BMS)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>التخصص الأنسب</strong></td>
+                        <td>هندسة كهربائية / ميكاترونيكس / ذكاء اصطناعي</td>
+                        <td>هندسة التحكم والعمليات / كيميائية / ميكانيك</td>
+                        <td>طاقة متجددة / إلكترونيات / ذكاء اصطناعي</td>
+                    </tr>
+                    <tr>
+                        <td><strong>المشكلة الواقعية</strong></td>
+                        <td>توقف خطوط الإنتاج بسبب انهيار المحركات</td>
+                        <td>التوقف الكلي لمصفاة النفط وخسائر التكرير</td>
+                        <td>التدهور المفاجئ وخطر اشتعال البطاريات</td>
+                    </tr>
+                    <tr>
+                        <td><strong>نوع التنبؤ (Prediction Type)</strong></td>
+                        <td>توقع العمر المتبقي للمحامل (RUL بالاهتزاز)</td>
+                        <td>توقع تراكم الترسب والتآكل (Fouling RUL)</td>
+                        <td>توقع دورات الشحن المتبقية والهروب الحراري</td>
+                    </tr>
+                    <tr>
+                        <td><strong>البيانات الجاهزة</strong></td>
+                        <td>✅ مولد بايثون محلي + CWRU + NASA</td>
+                        <td>✅ مولد بايثون مصفاة بانياس + Benchmark Ebert-Panchal</td>
+                        <td>قواعد بيانات NASA Ames Battery + Oxford Lab</td>
+                    </tr>
+                    <tr>
+                        <td><strong>فرص النشر العلمي</strong></td>
+                        <td>ممتازة (مؤتمرات IEEE الصناعية)</td>
+                        <td>عالية جداً (دراسة حالة نادرة لمصفاة نفط وطنية)</td>
+                        <td>استثنائية (المجال الأكثر نشراً واستشهاداً حالياً)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>مستوى الجاهزية الحالي</strong></td>
+                        <td><span class="status-badge badge-ready">جاهز بالكامل مع الأكواد والداتا والمحاكي</span></td>
+                        <td><span class="status-badge badge-ready">جاهز بالكامل مع الأكواد والداتا والمحاكي</span></td>
+                        <td><span class="status-badge badge-planned">خطة عمل مفصلة بنسبة 100%</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>بوابة مقترحات مشاريع التخرج الهندسية • الذكاء الاصطناعي والصيانة التنبؤية والتوائم الرقمية • 2026</p>
+    </footer>
+</div>
+
+</body>
+</html>

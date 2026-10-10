@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>دليل مرحلة استحواذ وتوليد البيانات (Data Acquisition & Benchmark Manual)</title>
+    <!-- Google Fonts: Cairo & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #090d16;
+            --bg-card: #131a29;
+            --bg-inner: #0d1320;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --border-highlight: rgba(6, 182, 212, 0.4);
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --accent-emerald: #10b981;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.8;
+            padding: 2.5rem 1rem;
+        }
+
+        .container {
+            max-width: 1180px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2.5rem;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        header {
+            text-align: center;
+            padding-bottom: 2rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+        }
+
+        .badge-header {
+            display: inline-block;
+            background: rgba(6, 182, 212, 0.1);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            padding: 0.35rem 0.9rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 40%, var(--accent-cyan) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.6rem;
+        }
+
+        .subtitle {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-cyan);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.45rem 1rem;
+            background: rgba(6, 182, 212, 0.1);
+            border: 1px solid rgba(6, 182, 212, 0.25);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+        }
+
+        .nav-back:hover {
+            background: var(--accent-cyan);
+            color: #000;
+        }
+
+        h2 {
+            font-size: 1.55rem;
+            margin: 2.5rem 0 1.2rem 0;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            border-bottom: 1px dashed var(--border-color);
+            padding-bottom: 0.6rem;
+        }
+
+        h2.green-title { color: var(--accent-emerald); }
+        h2.purple-title { color: var(--accent-purple); }
+        h2.cyan-title { color: var(--accent-cyan); }
+
+        h3 {
+            font-size: 1.25rem;
+            color: var(--accent-cyan);
+            margin: 1.6rem 0 0.8rem 0;
+            font-weight: 700;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            font-size: 0.96rem;
+            margin-bottom: 0.8rem;
+        }
+
+        ul {
+            margin-right: 1.5rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .code-block {
+            background: #060911;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-sm);
+            padding: 1.1rem;
+            font-family: 'Consolas', monospace;
+            direction: ltr;
+            text-align: left;
+            color: #38bdf8;
+            font-size: 0.88rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            line-height: 1.6;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+
+        /* Visual File Explorer Component */
+        .explorer-container {
+            background: #090e18;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .explorer-root-title {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--accent-cyan);
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-bottom: 0.8rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .explorer-folder {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: 1rem 1.2rem;
+            margin-bottom: 1rem;
+        }
+
+        .explorer-folder-header {
+            font-size: 0.95rem;
+            font-weight: 700;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .explorer-file-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.6rem 0.8rem;
+            border-radius: 6px;
+            background: rgba(0, 0, 0, 0.25);
+            margin-bottom: 0.45rem;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+            font-size: 0.88rem;
+            gap: 1rem;
+            transition: all 0.2s ease;
+        }
+
+        .explorer-file-item:hover {
+            background: rgba(6, 182, 212, 0.06);
+            border-color: rgba(6, 182, 212, 0.25);
+        }
+
+        .file-info {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            flex-wrap: wrap;
+        }
+
+        .file-code-name {
+            font-family: 'Consolas', monospace;
+            color: #38bdf8;
+            font-weight: 700;
+            background: rgba(56, 189, 248, 0.08);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            direction: ltr;
+        }
+
+        .file-label {
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+        }
+
+        .action-link-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.35rem;
+            padding: 0.3rem 0.75rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+        }
+
+        .action-link-btn.btn-cyan {
+            background: rgba(6, 182, 212, 0.12);
+            color: var(--accent-cyan);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+        }
+        .action-link-btn.btn-cyan:hover {
+            background: var(--accent-cyan);
+            color: #000;
+        }
+
+        .action-link-btn.btn-emerald {
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent-emerald);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+        }
+        .action-link-btn.btn-emerald:hover {
+            background: var(--accent-emerald);
+            color: #000;
+        }
+
+        .action-link-btn.btn-amber {
+            background: rgba(245, 158, 11, 0.12);
+            color: var(--accent-amber);
+            border: 1px solid rgba(245, 158, 11, 0.3);
+        }
+        .action-link-btn.btn-amber:hover {
+            background: var(--accent-amber);
+            color: #000;
+        }
+
+
+        .info-card {
+            background: var(--bg-inner);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin: 1.4rem 0;
+        }
+
+        .highlight-box {
+            background: rgba(6, 182, 212, 0.05);
+            border: 1px solid rgba(6, 182, 212, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1.2rem;
+            margin: 1.2rem 0;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.88rem;
+        }
+
+        .custom-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            text-align: right;
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+
+        .custom-table td {
+            padding: 0.85rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+        }
+
+        .custom-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .btn-download {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent-emerald);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 0.4rem 0.85rem;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.82rem;
+            transition: all 0.2s ease;
+        }
+
+        .btn-download:hover {
+            background: var(--accent-emerald);
+            color: #000;
+        }
+
+        .badge-small {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .badge-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+        .badge-purple { background: rgba(139, 92, 246, 0.15); color: var(--accent-purple); }
+        .badge-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .badge-emerald { background: rgba(16, 185, 129, 0.15); color: var(--accent-emerald); }
+
+        footer {
+            margin-top: 3.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+    <div style="display: flex; gap: 0.6rem; align-items: center; margin-bottom: 1.5rem; flex-wrap: wrap;">
+        <a href="../خطة_عمل_مشروع_الصيانة_التنبؤية.html" class="nav-back" style="margin-bottom:0;">➔ العودة لخطة عمل المحركات</a>
+        <a href="../../index.html" class="nav-back" style="margin-bottom:0; background: rgba(139, 92, 246, 0.12); border-color: rgba(139, 92, 246, 0.3); color: var(--accent-purple);">🏠 بوابة المشاريع الرئيسية (Index)</a>
+    </div>
+
+    <header>
+        <span class="badge-header">المرحلة الثانية: استحواذ وتوليد البيانات (Data Acquisition)</span>
+        <h1>📘 الدليل الشامل لتوليد واستخدام بيانات المحرك الحثي</h1>
+        <div class="subtitle">شرح وافٍ للأكواد التوليدية، مرونة التحكم بالحجم والمدى الزمني (أيام/أسابيع/أشهر)، وهيكلية المخرجات</div>
+    </header>
+
+    <!-- SECTION 1: MAP -->
+    <h2 class="cyan-title">📂 1. مستعرض الملفات المنظم (Project File Explorer)</h2>
+    <p>دليل مرئي منظم يوضح جميع ملفات ومجلدات المرحلة مع إمكانية التحميل والمعاينة المباشرة بنقرة واحدة:</p>
+    
+    <div class="explorer-container">
+        <!-- Root Folder Header -->
+        <div class="explorer-root-title">
+            <span>📁 المجلد الرئيسي للمشروع: <code>data_acquisition/</code></span>
+            <span class="badge-tag badge-cyan">مسارات نسبية تعمل على أي جهاز</span>
+        </div>
+
+        <!-- 1. Generated Datasets Folder -->
+        <div class="explorer-folder">
+            <div class="explorer-folder-header">
+                <span style="color: var(--accent-emerald);">📁 مجلد البيانات المولدة: <code>generated_datasets/</code></span>
+                <span class="badge-tag badge-emerald">الخيار 1: التوليد الاصطناعي</span>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">synthetic_motor_normal.csv</span>
+                    <span class="file-label">— إشارات المحرك السليم (2 ثانية @ 1000Hz)</span>
+                </div>
+                <a href="generated_datasets/synthetic_motor_normal.csv" class="action-link-btn btn-emerald">📥 تحميل CSV</a>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">synthetic_motor_bearing_fault.csv</span>
+                    <span class="file-label">— إشارات عطل المحامل الميكانيكي (120Hz BPFO)</span>
+                </div>
+                <a href="generated_datasets/synthetic_motor_bearing_fault.csv" class="action-link-btn btn-emerald">📥 تحميل CSV</a>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">synthetic_motor_stator_fault.csv</span>
+                    <span class="file-label">— إشارات عطل ملفات العضو الثابت وعدم اتزان الأطوار</span>
+                </div>
+                <a href="generated_datasets/synthetic_motor_stator_fault.csv" class="action-link-btn btn-emerald">📥 تحميل CSV</a>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">synthetic_motor_rul_degradation.csv</span>
+                    <span class="file-label">— متسلسلة التدهور ومراقبة العمر RUL (100 ساعة)</span>
+                </div>
+                <a href="generated_datasets/synthetic_motor_rul_degradation.csv" class="action-link-btn btn-emerald">📥 تحميل CSV</a>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">synthetic_rul_7_days.csv</span>
+                    <span class="file-label">— متسلسلة تدهور مخصصة لأسبوع كامل (168 ساعة)</span>
+                </div>
+                <a href="generated_datasets/synthetic_rul_7_days.csv" class="action-link-btn btn-emerald">📥 تحميل CSV</a>
+            </div>
+        </div>
+
+        <!-- 2. Benchmark Datasets Folder -->
+        <div class="explorer-folder">
+            <div class="explorer-folder-header">
+                <span style="color: var(--accent-purple);">📁 مجلد البيانات العالمية: <code>benchmark_datasets/</code></span>
+                <span class="badge-tag badge-purple">الخيار 2: القواعد المعتمدة عالمياً</span>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">CWRU_Bearing_Data/ ➔ CWRU_Benchmark_Sample.csv</span>
+                    <span class="file-label">— بيانات جامعة كيس ويسترن ريسرف (12,000Hz)</span>
+                </div>
+                <a href="benchmark_datasets/CWRU_Bearing_Data/CWRU_Benchmark_Sample.csv" class="action-link-btn btn-cyan">📥 تحميل CSV</a>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">NASA_Prognostics_Data/ ➔ NASA_FD001_Bearing_Degradation.csv</span>
+                    <span class="file-label">— بيانات وكالة ناسا لنمذجة التدهور وتوقع RUL</span>
+                </div>
+                <a href="benchmark_datasets/NASA_Prognostics_Data/NASA_FD001_Bearing_Degradation.csv" class="action-link-btn btn-cyan">📥 تحميل CSV</a>
+            </div>
+        </div>
+
+        <!-- 3. Scripts and Documentation -->
+        <div class="explorer-folder">
+            <div class="explorer-folder-header">
+                <span style="color: var(--accent-cyan);">⚙️ الأكواد وأدلة التوثيق (Scripts & Manuals)</span>
+                <span class="badge-tag badge-cyan">أدوات العمل الرئيسية</span>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">generate_synthetic_motor_data.py</span>
+                    <span class="file-label">— سكريبت بايثون المطور لتوليد البيانات (الافتراضي أو المخصص لأيام/شهور)</span>
+                </div>
+                <a href="generate_synthetic_motor_data.py" target="_blank" class="action-link-btn btn-cyan">📄 فتح الكود</a>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">README_data_acquisition.html</span>
+                    <span class="file-label">— الدليل التفاعلي الكامل للمرحلة (الصفحة الحالية)</span>
+                </div>
+                <span class="badge-tag badge-cyan">الصفحة الحالية</span>
+            </div>
+
+            <div class="explorer-file-item">
+                <div class="file-info">
+                    <span class="file-code-name">README_data_acquisition.md</span>
+                    <span class="file-label">— الدليل المكتوب بصيغة Markdown للقراءة السريعة</span>
+                </div>
+                <a href="README_data_acquisition.md" target="_blank" class="action-link-btn btn-amber">📘 فتح Markdown</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SECTION 2: SYNTHETIC DATA DETAILED GUIDE -->
+    <h2 class="green-title">🟢 2. الخيار الأول: التوليد الاصطناعي (Synthetic Data Generator)</h2>
+
+    <div class="highlight-box">
+        <h3 style="margin-top:0; color: var(--accent-emerald);">💡 هل تُولد هذه الأكواد بيانات ثابتة أم متغيرة حسب الحاجة (أيام / أسابيع / أشهر)؟</h3>
+        <p><strong>الإجابة: الأكواد مصممة لتدعم النمطين معاً بأعلى مرونة برمجية:</strong></p>
+        <ul>
+            <li><strong>1. النمط الافتراضي السريع (Fixed Quick-Start):</strong> عند تشغيل السكريبت بدون أي خيارات إضافية، يولد فوراً الحزم القياسية الأربعة السريعة (سليم، عطل محامل، عطل ملفات، ومتسلسلة تدهور 100 ساعة) لتجربة الأكواد واختبار النماذج بشكل فوري دون انتظار.</li>
+            <li><strong>2. نمط التوليد المخصص حسب الطلب (Dynamic On-Demand Generation):</strong> يمكنك تحديد المدة المطلوبة بدقة تامة:
+                <br>• بالساعات (Hours)
+                <br>• بالأيام (Days) — مثلاً محاكاة 7 أيام أو 30 يوماً
+                <br>• بالأسابيع (Weeks) — مثلاً أسبوعين أو 4 أسابيع
+                <br>• بالأشهر (Months) — مثلاً شهر واحد أو 3 أشهر أو 6 أشهر
+                <br>• بالثواني والدقائق للموجات اللحظية (High-Frequency Waveforms).
+            </li>
+        </ul>
+    </div>
+
+    <div class="info-card">
+        <h3>🧠 الفلسفة العلمية: الفرق بين نوعي البيانات المولدة</h3>
+        <p>في مشاريع الصيانة التنبؤية للمحركات الحثية، تُقسم البيانات دائماً إلى مسارين مختلفين تماماً من حيث التردد والهدف:</p>
+        
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>وجه المقارنة</th>
+                    <th>إشارات الموجات اللحظية (Waveforms)</th>
+                    <th>بيانات المراقبة والتدهور التراكمية (RUL Telemetry)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>الهدف الهندسي</strong></td>
+                    <td>تشخيص نوع العطل (Fault Classification) ومطياف الترددات</td>
+                    <td>توقع العمر الافتراضي المتبقي (RUL Prediction) ومؤشر الصحة</td>
+                </tr>
+                <tr>
+                    <td><strong>معدل أخذ العينات</strong></td>
+                    <td>عالي جداً: 1,000 إلى 12,000 عينة في الثانية (1kHz - 12kHz)</td>
+                    <td>معدل زمني منتظم: مثلاً 6 عينات/ساعة (كل 10 دقائق) أو عينة/ساعة</td>
+                </tr>
+                <tr>
+                    <td><strong>المدى الزمني المناسب</strong></td>
+                    <td>ثوانٍ أو دقائق معدودة (لقطات تشغيلية سريعة Bursts)</td>
+                    <td>أيام، أسابيع، أو أشهر لمحاكاة دورة حياة المحرك حتى الانهيار</td>
+                </tr>
+                <tr>
+                    <td><strong>المتغيرات المسجلة</strong></td>
+                    <td>اهتزاز فوري عالي التردد، تيار فوري للأطوار 3، حرارة لحظية</td>
+                    <td>RMS الاهتزاز، Crest Factor، Kurtosis، اتزان التيار، الحرارة، RUL</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-card">
+        <h3>💻 دليل التشغيل وأمثلة الأوامر في Terminal / سطر الأوامر</h3>
+        <p>المكتبات المطلوبة: <code>numpy</code> و <code>pandas</code> فقط. يمكن تثبيتها بالأمر:</p>
+        <div class="code-block">pip install numpy pandas</div>
+
+        <p><strong>1️⃣ التوليد الافتراضي السريع (يولد الملفات الأربعة القياسية فوراً):</strong></p>
+        <div class="code-block">python data_acquisition/generate_synthetic_motor_data.py</div>
+
+        <p><strong>2️⃣ توليد بيانات مراقبة وتدهور RUL لمدة أسبوع كامل (7 أيام):</strong></p>
+        <div class="code-block">python data_acquisition/generate_synthetic_motor_data.py --mode rul --duration 7 --unit days --samples-per-hour 6</div>
+
+        <p><strong>3️⃣ توليد بيانات مراقبة وتدهور RUL لشهر كامل (30 يوماً / 720 ساعة):</strong></p>
+        <div class="code-block">python data_acquisition/generate_synthetic_motor_data.py --mode rul --duration 1 --unit months --samples-per-hour 2</div>
+
+        <p><strong>4️⃣ توليد إشارة اهتزاز وتيار لحظية عالية التردد (2,000Hz) لعطل محامل لمدة 10 ثوانٍ:</strong></p>
+        <div class="code-block">python data_acquisition/generate_synthetic_motor_data.py --mode waveform --fault bearing_fault --duration 10 --sampling-rate 2000</div>
+
+        <p><strong>5️⃣ استعراض قائمة الخيارات والمساعدة الكاملة (--help):</strong></p>
+        <div class="code-block">python data_acquisition/generate_synthetic_motor_data.py --help</div>
+    </div>
+
+    <!-- SECTION 3: OUTPUT SCHEMAS -->
+    <h2 class="cyan-title">📊 3. أشكال الخرج ومواصفات الحقول بالتفصيل (Output Schemas)</h2>
+
+    <div class="info-card">
+        <h3>أ) شكل الخرج لملفات الإشارات اللحظية (Waveform CSVs)</h3>
+        <p>ينطبق على ملفات: <code>synthetic_motor_normal.csv</code> و <code>synthetic_motor_bearing_fault.csv</code> و <code>synthetic_motor_stator_fault.csv</code>:</p>
+        
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>اسم العمود</th>
+                    <th>الوحدة</th>
+                    <th>الوصف الفيزيائي والتطبيقي</th>
+                    <th>مثال رقمي</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>time_sec</code></td>
+                    <td>ثانية (s)</td>
+                    <td>الزمن اللحظي المنقضي منذ بدء أخذ العينة بدقة 4 خانات عشرية</td>
+                    <td><code>0.0020</code></td>
+                </tr>
+                <tr>
+                    <td><code>vibration_x_g</code></td>
+                    <td>g (تسارع)</td>
+                    <td>تسارع الاهتزاز في المحور الأفقي X (حساس لمشاكل عدم المحاذاة)</td>
+                    <td><code>1.0821</code></td>
+                </tr>
+                <tr>
+                    <td><code>vibration_y_g</code></td>
+                    <td>g (تسارع)</td>
+                    <td>تسارع الاهتزاز في المحور الرأسي Y (حساس لعيوب المحامل الميكانيكية)</td>
+                    <td><code>-0.9415</code></td>
+                </tr>
+                <tr>
+                    <td><code>current_Ia_amp</code></td>
+                    <td>أمبير (A)</td>
+                    <td>تيار الطور الأول A (تردد أساسي 50Hz)</td>
+                    <td><code>9.852</code></td>
+                </tr>
+                <tr>
+                    <td><code>current_Ib_amp</code></td>
+                    <td>أمبير (A)</td>
+                    <td>تيار الطور الثاني B (بفارق طور 120 درجة)</td>
+                    <td><code>-4.912</code></td>
+                </tr>
+                <tr>
+                    <td><code>current_Ic_amp</code></td>
+                    <td>أمبير (A)</td>
+                    <td>تيار الطور الثالث C (بفارق طور 240 درجة)</td>
+                    <td><code>-4.940</code></td>
+                </tr>
+                <tr>
+                    <td><code>temperature_c</code></td>
+                    <td>مئوية (°C)</td>
+                    <td>درجة حرارة هيكل المحمل/المحرك (ترتفع عند الاحتكاك أو الخلل)</td>
+                    <td><code>45.18</code></td>
+                </tr>
+                <tr>
+                    <td><code>fault_label</code></td>
+                    <td>نص</td>
+                    <td>التصنيف الفعلي للحالة: normal, bearing_fault, stator_fault</td>
+                    <td><code>normal</code></td>
+                </tr>
+                <tr>
+                    <td><code>degradation_ratio</code></td>
+                    <td>نسبة</td>
+                    <td>معامل التدهور المحقون من 0.0 (سليم تماماً) إلى 1.0 (تلف كلي)</td>
+                    <td><code>0.000</code></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="info-card">
+        <h3>ب) شكل الخرج لملف متسلسلة التدهور والعمر (RUL Telemetry CSV)</h3>
+        <p>ينطبق على ملف <code>synthetic_motor_rul_degradation.csv</code> وملفات التوليد المخصص (أيام/أسابيع/أشهر):</p>
+        
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>اسم العمود</th>
+                    <th>الوحدة</th>
+                    <th>الوصف التشغيلي ونمذجة الذكاء الاصطناعي</th>
+                    <th>سلوك القيمة مع الزمن</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><code>operating_hours</code></td>
+                    <td>ساعة (hr)</td>
+                    <td>ساعات العمل التراكمية المنقضية للمحرك</td>
+                    <td>تزايدي منتظم (مثلاً من 0 إلى 168 ساعة)</td>
+                </tr>
+                <tr>
+                    <td><code>rms_vibration</code></td>
+                    <td>g</td>
+                    <td>جذر متوسط مربعات الاهتزاز (مؤشر عام على طاقة الطاقة الحركية)</td>
+                    <td>يرتفع تدريجياً مع زيادة التآكل</td>
+                </tr>
+                <tr>
+                    <td><code>crest_factor</code></td>
+                    <td>نسبة</td>
+                    <td>معامل القمة (نسبة أقصى صدمة إلى RMS) لكشف الصدمات المبكرة</td>
+                    <td>يقفز بشدة عند بدء ظهور الشروخ الميكانيكية</td>
+                </tr>
+                <tr>
+                    <td><code>kurtosis</code></td>
+                    <td>نسبة</td>
+                    <td>معامل التفرطح لتوزيع الإشارة (المعيار الصناعي المعتمد لكشف الصدمات)</td>
+                    <td>يتجاوز 3.0 بشكل حاد عند وجود عيوب صريحة</td>
+                </tr>
+                <tr>
+                    <td><code>avg_temperature_c</code></td>
+                    <td>مئوية (°C)</td>
+                    <td>متوسط حرارة المحرك في نقطة التسجيل</td>
+                    <td>يرتفع مع ارتفاع الاحتكاك الميكانيكي</td>
+                </tr>
+                <tr>
+                    <td><code>current_unbalance_ratio</code></td>
+                    <td>نسبة</td>
+                    <td>نسبة عدم الاتزان بين أطوار التيار الكهربائي الثلاثة</td>
+                    <td>يقفز عند حدوث خلل في عوازل الملفات</td>
+                </tr>
+                <tr>
+                    <td><code>health_index</code></td>
+                    <td>0.0 - 1.0</td>
+                    <td>مؤشر صحة المحرك (1.0 = جديد تماماً، 0.0 = تلف كامل)</td>
+                    <td>ينحدر تنازلياً مع اقتراب موعد الانهيار</td>
+                </tr>
+                <tr>
+                    <td><code>RUL_hours</code></td>
+                    <td>ساعة (hr)</td>
+                    <td>العمر الافتراضي المتبقي الدقيق (الهدف Target لنموذج التعلم)</td>
+                    <td>ينخفض خطياً وتدريجياً حتى يصل للصفر</td>
+                </tr>
+                <tr>
+                    <td><code>status</code></td>
+                    <td>نص تصنيفي</td>
+                    <td>حالة الخطر الحالية: NORMAL (آمن), WARNING (تحذير), CRITICAL (حرج)</td>
+                    <td>يتغير تلقائياً حسب مؤشر الصحة HI</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SECTION 4: BENCHMARK DATASETS -->
+    <h2 class="purple-title">🔵 4. الخيار الثاني: قواعد البيانات العالمية (Benchmark Datasets)</h2>
+    
+    <div class="info-card">
+        <h3>1. داتا سيت جامعة كيس ويسترن ريسرف (CWRU Bearing Dataset)</h3>
+        <p><strong>المصدر الرسمي:</strong> <a href="http://caseds.case.edu/" target="_blank" style="color: var(--accent-cyan);">Case Western Reserve University Bearing Data Center</a></p>
+        <p><strong>النبذة الوصفية:</strong> تمثل المعيار الذهبي المعتمد عالمياً في أوراق الأبحاث لتقييم خوارزميات كشف عيوب المحامل الميكانيكية عبر مستشعرات تسارع مثبتة عند طرف المحرك (Drive End DE) بتردد عينات 12,000Hz.</p>
+        <p>📂 <strong>مسار الملف المحلي:</strong> <code>data_acquisition/benchmark_datasets/CWRU_Bearing_Data/CWRU_Benchmark_Sample.csv</code></p>
+        <a href="benchmark_datasets/CWRU_Bearing_Data/CWRU_Benchmark_Sample.csv" class="btn-download">📥 تحميل ملف CWRU_Benchmark_Sample.csv</a>
+    </div>
+
+    <div class="info-card">
+        <h3>2. داتا سيت ناسا لتوقع العمر المتبقي (NASA Prognostics Repository)</h3>
+        <p><strong>المصدر الرسمي:</strong> <a href="https://data.nasa.gov/" target="_blank" style="color: var(--accent-purple);">NASA Data Portal & Prognostics Center of Excellence</a></p>
+        <p><strong>النبذة الوصفية:</strong> تمثل المعيار العالمي لاختبار خوارزميات التعلم العميق (LSTM / GRU) على التنبؤ بالعمر الافتراضي المتبقي (RUL) عبر تتبع مسار التدهور حتى الفشل التام.</p>
+        <p>📂 <strong>مسار الملف المحلي:</strong> <code>data_acquisition/benchmark_datasets/NASA_Prognostics_Data/NASA_FD001_Bearing_Degradation.csv</code></p>
+        <a href="benchmark_datasets/NASA_Prognostics_Data/NASA_FD001_Bearing_Degradation.csv" class="btn-download">📥 تحميل ملف NASA_FD001_Bearing_Degradation.csv</a>
+    </div>
+
+    <footer>
+        <p>مشروع الصيانة التنبؤية للمحركات الحثية (Predictive Maintenance for Induction Motors) • 2026</p>
+    </footer>
+</div>
+
+</body>
+</html>

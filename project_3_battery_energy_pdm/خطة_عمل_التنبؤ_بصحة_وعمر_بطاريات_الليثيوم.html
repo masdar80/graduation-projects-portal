@@ -1,0 +1,1144 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>خطة عمل مشروع التنبؤ بصحة وعمر بطاريات الليثيوم (Battery SOH & RUL Prognostics)</title>
+    <!-- Google Fonts: Cairo & Outfit -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800;900&family=Outfit:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bg-dark: #060b13;
+            --bg-card: #0f1826;
+            --bg-card-hover: #162438;
+            --border-color: rgba(255, 255, 255, 0.08);
+            --accent-green: #10b981;
+            --accent-cyan: #06b6d4;
+            --accent-purple: #8b5cf6;
+            --accent-amber: #f59e0b;
+            --accent-rose: #f43f5e;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --radius-lg: 16px;
+            --radius-md: 12px;
+            --radius-sm: 8px;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', system-ui, -apple-system, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.8;
+            padding: 2rem 1rem;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1240px;
+            margin: 0 auto;
+            padding: 0 1rem;
+        }
+
+        .nav-back {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent-green);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            padding: 0.45rem 1rem;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.25);
+            border-radius: var(--radius-sm);
+            transition: all 0.2s ease;
+        }
+
+        .nav-back:hover {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        header {
+            text-align: center;
+            padding: 3rem 1.5rem;
+            background: radial-gradient(circle at top center, rgba(16, 185, 129, 0.15) 0%, rgba(6, 182, 212, 0.05) 50%, transparent 80%);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            margin-bottom: 2.5rem;
+            position: relative;
+        }
+
+        .badge-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            background: rgba(16, 185, 129, 0.12);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            color: var(--accent-green);
+            padding: 0.35rem 1rem;
+            border-radius: 50px;
+            font-size: 0.88rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2.3rem;
+            font-weight: 900;
+            background: linear-gradient(135deg, #ffffff 30%, var(--accent-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+            line-height: 1.3;
+        }
+
+        .header-desc {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .highlight-card {
+            background: rgba(16, 185, 129, 0.04);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            border-radius: var(--radius-md);
+            padding: 1.5rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .highlight-title {
+            color: var(--accent-green);
+            font-size: 1.2rem;
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .phase-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-lg);
+            padding: 2rem;
+            margin-bottom: 2rem;
+            position: relative;
+            transition: border-color 0.3s ease;
+        }
+
+        .phase-card:hover {
+            border-color: rgba(16, 185, 129, 0.35);
+        }
+
+        .phase-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .phase-title-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .phase-icon-box {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            background: rgba(16, 185, 129, 0.12);
+            color: var(--accent-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            border: 1px solid rgba(16, 185, 129, 0.25);
+        }
+
+        .phase-title {
+            font-size: 1.35rem;
+            font-weight: 800;
+            color: var(--text-primary);
+        }
+
+        .phase-subtitle {
+            font-size: 0.88rem;
+            color: var(--text-muted);
+        }
+
+        .phase-tag {
+            background: rgba(16, 185, 129, 0.15);
+            color: var(--accent-green);
+            border: 1px solid rgba(16, 185, 129, 0.3);
+            padding: 0.25rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .substeps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .substep-box {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+        }
+
+        .substep-title {
+            font-weight: 700;
+            color: var(--accent-green);
+            font-size: 1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .substep-desc {
+            font-size: 0.88rem;
+            color: var(--text-secondary);
+            margin-bottom: 0.8rem;
+            line-height: 1.6;
+        }
+
+        .task-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+        }
+
+        .task-item {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .bullet-icon {
+            color: var(--accent-green);
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .custom-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.2rem 0;
+            font-size: 0.88rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: var(--radius-sm);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .custom-table th {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+            text-align: right;
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+            font-weight: 700;
+        }
+
+        .custom-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            color: var(--text-secondary);
+        }
+
+        .custom-table tr:hover td {
+            background: rgba(16, 185, 129, 0.04);
+        }
+
+        /* Code Studio Component & Editor Aesthetic */
+        .code-studio {
+            background: #080c16;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            margin-top: 1.25rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .code-studio-bar {
+            background: #0c1322;
+            padding: 0.65rem 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+            direction: rtl;
+        }
+
+        .code-studio-left {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .code-studio-dots {
+            display: flex;
+            gap: 6px;
+            direction: ltr;
+        }
+
+        .code-dot {
+            width: 11px;
+            height: 11px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+        .dot-red { background: #ff5f56; }
+        .dot-yellow { background: #ffbd2e; }
+        .dot-green { background: #27c93f; }
+
+        .code-studio-title {
+            font-size: 0.82rem;
+            color: var(--text-secondary);
+            font-weight: 600;
+            font-family: 'Outfit', 'Cairo', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-studio-actions {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .copy-btn {
+            background: rgba(16, 185, 129, 0.15);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: var(--accent-green);
+            padding: 0.35rem 0.8rem;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            cursor: pointer;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 700;
+            transition: all 0.2s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+        }
+
+        .copy-btn:hover {
+            background: var(--accent-green);
+            color: #000;
+        }
+
+        .code-studio-body {
+            padding: 1.25rem;
+            direction: ltr;
+            text-align: left;
+            overflow-x: auto;
+            background: #050811;
+        }
+
+        .code-studio-pre {
+            margin: 0;
+            font-family: 'Consolas', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.86rem;
+            line-height: 1.65;
+            color: #e2e8f0;
+            white-space: pre;
+        }
+
+        /* Syntax highlight tokens */
+        .syn-kw { color: #f43f5e; font-weight: 600; }
+        .syn-fn { color: #38bdf8; font-weight: 600; }
+        .syn-param { color: #fb923c; }
+        .syn-str { color: #34d399; }
+        .syn-num { color: #fbbf24; }
+        .syn-cmt { color: #64748b; font-style: italic; }
+        .syn-bool { color: #c084fc; font-weight: 600; }
+        .syn-doc { color: #94a3b8; font-style: italic; }
+
+        .badge-small {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+        .badge-green { background: rgba(16, 185, 129, 0.15); color: var(--accent-green); }
+        .badge-cyan { background: rgba(6, 182, 212, 0.15); color: var(--accent-cyan); }
+        .badge-amber { background: rgba(245, 158, 11, 0.15); color: var(--accent-amber); }
+        .badge-rose { background: rgba(244, 63, 94, 0.15); color: var(--accent-rose); }
+
+        /* Interactive Battery Simulator Widget */
+        .simulator-widget {
+            background: #090e18;
+            border: 1px solid var(--border-color);
+            border-radius: var(--radius-md);
+            padding: 1.25rem;
+            margin-top: 1.25rem;
+        }
+
+        .sim-controls {
+            display: flex;
+            gap: 0.8rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .sim-btn {
+            padding: 0.5rem 1.2rem;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-color);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.85rem;
+            font-family: 'Cairo', sans-serif;
+            transition: all 0.2s ease;
+        }
+
+        .sim-btn.active-sim {
+            background: var(--accent-green);
+            color: #000;
+            border-color: var(--accent-green);
+        }
+
+        #batteryCanvas {
+            width: 100%;
+            height: 230px;
+            background: #050811;
+            border-radius: var(--radius-sm);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            display: block;
+        }
+
+        footer {
+            margin-top: 3.5rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-color);
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="../index.html" class="nav-back">➔ العودة إلى بوابة مقترحات المشاريع الرئيسية (Index)</a>
+
+    <header>
+        <div class="badge-tag">
+            <span>🔋 مقترح مشروع تخرج متقدم • Predictive AI & Clean Energy</span>
+        </div>
+        <h1>المنظومة التنبؤية الذكية لتقدير الحالة الصحية وتوقع العمر المتبقي (SOH & RUL) لبطاريات الليثيوم</h1>
+        <p class="header-desc">
+            تطوير نظام إدارة بطاريات تنبؤي فائق الذكاء (Predictive BMS) يجمع بين النمذجة الكهروكيميائية وشبكات التعلم العميق (LSTM / PINN) للتنبؤ بتدهور السعة، وحساب دورات الشحن المتبقية بدقة، والإنذار المبكر بالهروب الحراري (Thermal Runaway) لمحطات الطاقة الشمسية والسيارات الكهربائية.
+        </p>
+    </header>
+
+    <!-- HIGHLIGHTS & SIGNIFICANCE -->
+    <div class="highlight-card">
+        <div class="highlight-title">💡 لماذا يُعد هذا المقترح من أقوى وأحدث مشاريع التخرج عالمياً؟</div>
+        <p style="font-size: 0.95rem; color: var(--text-secondary); margin-bottom: 0.8rem;">
+            تُشكل بطاريات أيونات الليثيوم (Li-ion Batteries) عصب الثورة الصناعية الحديثة، بدءاً من منظومات تخزين الطاقة الشمسية المنزلية والصناعية (BESS) وحتى السيارات الكهربائية (EVs). التحدي الأكبر يكمن في أن تدهور خلايا البطارية غير خطي ومعقد للغاية، حيث يؤدي فشل خلية واحدة في بطارية عملاقة إلى توقف المنظومة أو اشتعال حريق مدمر.
+        </p>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; font-size: 0.88rem; margin-top: 1rem;">
+            <div style="background: rgba(0,0,0,0.3); padding: 0.85rem; border-radius: 8px; border-right: 3px solid var(--accent-green);">
+                <strong style="color: var(--accent-green);">🎯 1. التنبؤ بالحالة الصحية (SOH Prediction)</strong>
+                <p style="color: var(--text-secondary); margin-top: 0.3rem;">حساب السعة الفعلية المتبقية ومقاومة القطب الداخلي لحظياً دون الحاجة لفصل البطارية عن الشحن أو التفريغ المعملي البطيء.</p>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 0.85rem; border-radius: 8px; border-right: 3px solid var(--accent-cyan);">
+                <strong style="color: var(--accent-cyan);">⏳ 2. توقع العمر المتبقي (RUL Prognosis)</strong>
+                <p style="color: var(--text-secondary); margin-top: 0.3rem;">التنبؤ بعدد دورات الشحن والأيام المتبقية قبل وصول سعة البطارية إلى 80% (End of Life - EOL) لحمايتها وإعادة تدويرها اقتصادياً.</p>
+            </div>
+            <div style="background: rgba(0,0,0,0.3); padding: 0.85rem; border-radius: 8px; border-right: 3px solid var(--accent-rose);">
+                <strong style="color: var(--accent-rose);">🔥 3. التنبؤ بالهروب الحراري (Safety Alert)</strong>
+                <p style="color: var(--text-secondary); margin-top: 0.3rem;">خوارزميات ذكاء اصطناعي تكشف الشذوذ الطفيف في سلوك الجهد والحرارة قبل ساعات من حدوث الانفجار أو الاشتعال الحراري الذاتي.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- PHASE 1 -->
+    <section class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">🔬</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 1: فهم آليات التدهور الكهروكيميائي لبطاريات الليثيوم</h2>
+                    <div class="phase-subtitle">الأساس العلمي لظاهرة شيخوخة الخلايا (Aging Mechanisms) ونمو طبقة SEI</div>
+                </div>
+            </div>
+            <span class="phase-tag">الشهر 1</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">1.1 تآكل وفقدان أيونات الليثيوم النشطة (LLI)</div>
+                <div class="substep-desc">بسبب نمو طبقة الطور البيني للإلكتروليت الصلب (Solid Electrolyte Interphase - SEI) على المصعد (Anode).</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>نمذجة استهلاك أيونات الليثيوم الحرة مع كل دورة شحن وتفريغ.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">1.2 فقدان المادة الفعالة بالقطب (LAM)</div>
+                <div class="substep-desc">حدوث شروخ ميكانيكية دقيقة في جزيئات الكاثود (NMC / LFP) وتفكك المادة الرابطة بسبب التمدد والتقلص الحجمي.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تأثير الشحن السريع (High C-rate) ودرجات الحرارة القصوى على تسريع الفشل.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">1.3 ارتفاع المقاومة الداخلية (Internal Resistance Increase)</div>
+                <div class="substep-desc">زيادة مقاومة الأومية والشحنية مما يسبب هبوطاً حاداً في الجهد وتوليداً زائداً للحرارة (Joule Heating).</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>استخراج ميزات منحنى تفريغ الجهد التزايدي (Incremental Capacity Analysis - ICA).</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 2 -->
+    <section class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">📊</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 2: استحواذ وتوليد بيانات بطاريات الليثيوم (Data Acquisition & Benchmark Datasets)</h2>
+                    <div class="phase-subtitle">توفير البيانات لمحاكاة وتدريب نماذج تقدير الـ SOH وتوقع الـ RUL عبر المسار التوليدي البرمجي وقواعد بيانات ناسا العالمية المعتمدة</div>
+                </div>
+            </div>
+            <span class="phase-tag">الشهر 2</span>
+        </div>
+
+        <div class="substeps-grid">
+            <!-- Option 1 Card -->
+            <div class="substep-box" style="border: 1px solid rgba(16, 185, 129, 0.4); background: rgba(16, 185, 129, 0.04);">
+                <div class="substep-title">
+                    <span>🟢 الخيار الأول: التوليد الاصطناعي (Battery Python Generator)</span>
+                </div>
+                <div class="substep-desc">محاكاة كهروكيميائية وحرارية لخلايا الليثيوم أيون (18650 / LFP / NMC) وتوليد دورات الشحن والتفريغ والتدهور التدريجي ومؤشرات الهروب الحراري.</div>
+                
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>سكريبت متقدم ومرن <code>generate_synthetic_battery_data.py</code> متاح بالكامل للطالب والباحث.</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span><strong>مرونة مطلقة:</strong> يستطيع الطالب توليد أي فترة زمنية يشاء (أيام، أسابيع، أشهر) أو تحديد عدد دورات الشحن والتفريغ (مثلاً 500 أو 1,000 دورة).</span></li>
+                </ul>
+
+                <!-- Flexibility Callout -->
+                <div style="margin: 0.8rem 0; padding: 0.85rem; background: rgba(16, 185, 129, 0.08); border-radius: 6px; border-right: 3px solid var(--accent-green); font-size: 0.84rem; line-height: 1.65;">
+                    <div style="font-weight: 700; color: var(--accent-green); margin-bottom: 0.3rem;">💡 هل التوليد ثابت أم حسب الحاجة (دورات / أيام / أسابيع / أشهر)؟</div>
+                    <div>
+                        <strong>يدعم النمطين معاً بأعلى مرونة:</strong>
+                        <br>• <strong>النمط السريع الافتراضي:</strong> يولد فوراً الحزم الخمس القياسية بنقرة واحدة لاختبار الكود والبدء بالتدريب الفوري.
+                        <br>• <strong>النمط المخصص حسب الطلب (On-Demand):</strong> يتيح للطالب تحديد أي مدة أو عدد دورات عبر سطر الأوامر (بالدورات مثل 600 دورة، <strong>الأيام مثل أسبوع</strong>، أو <strong>الأشهر مثل شهر أو 3 أشهر</strong>) لمحاكاة تدهور سعة البطارية حتى حد نهاية العمر (EOL).
+                    </div>
+                </div>
+
+                <!-- Documentation Links -->
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+                    <a href="data_acquisition/README_data_acquisition.html" target="_blank" style="color: var(--accent-green); text-decoration: none; font-size: 0.82rem; padding: 0.35rem 0.7rem; background: rgba(16,185,129,0.15); border-radius: 4px; font-weight: 700; border: 1px solid rgba(16,185,129,0.3); display: inline-flex; align-items: center; gap: 0.4rem;">
+                        🌐 فتح الدليل الشامل كـ HTML
+                    </a>
+                    <a href="data_acquisition/README_data_acquisition.md" target="_blank" style="color: #f59e0b; text-decoration: none; font-size: 0.82rem; padding: 0.35rem 0.7rem; background: rgba(245,158,11,0.15); border-radius: 4px; border: 1px solid rgba(245,158,11,0.3); font-weight: 700;">
+                        📘 فتح كـ Markdown (.md)
+                    </a>
+                </div>
+
+                <!-- CLI Snippet -->
+                <div style="background: #060911; border: 1px solid rgba(255,255,255,0.08); border-radius: 6px; padding: 0.75rem; margin-bottom: 0.8rem; font-family: 'Consolas', monospace; direction: ltr; text-align: left; font-size: 0.78rem; color: #34d399; line-height: 1.5;">
+                    <div style="color: #94a3b8; font-size: 0.75rem; direction: rtl; text-align: right; margin-bottom: 0.3rem; font-family: 'Cairo', sans-serif;">💻 أمثلة أوامر التشغيل من Terminal لتوليد بيانات جديدة:</div>
+                    <div style="color: #64748b;"># 1. التشغيل الافتراضي السريع (يولد الملفات الخمسة فوراً):</div>
+                    <div>python project_3_battery_energy_pdm/data_acquisition/generate_synthetic_battery_data.py</div>
+                    <div style="color: #64748b; margin-top: 0.3rem;"># 2. توليد مراقبة تدهور لـ 600 دورة شحن كاملة:</div>
+                    <div>python project_3_battery_energy_pdm/data_acquisition/generate_synthetic_battery_data.py --scenario rul --duration 600 --unit cycles</div>
+                    <div style="color: #64748b; margin-top: 0.3rem;"># 3. توليد مراقبة حزمة بطاريات لمدة أسبوع كامل (7 أيام / 168 ساعة):</div>
+                    <div>python project_3_battery_energy_pdm/data_acquisition/generate_synthetic_battery_data.py --scenario timeseries --duration 7 --unit days</div>
+                </div>
+
+                <!-- Section A: The Generator Script -->
+                <div style="padding: 0.75rem; background: rgba(0,0,0,0.25); border-radius: 6px; border: 1px solid rgba(16,185,129,0.25); margin-bottom: 0.8rem;">
+                    <div style="font-size: 0.85rem; font-weight: 700; color: var(--accent-green); margin-bottom: 0.3rem;">
+                        🐍 أداة التوليد البرمجية المفتوحة (للطالب لإنشاء أي بيانات إضافية):
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+                        يمكن للطالب تعديل معاملات الكود أو تشغيله لتوليد بيانات بحجوم وفترات مخصصة تماماً:
+                    </div>
+                    <a href="data_acquisition/generate_synthetic_battery_data.py" target="_blank" style="color: #34d399; text-decoration: none; font-weight: 700; background: rgba(16,185,129,0.12); padding: 0.35rem 0.7rem; border-radius: 4px; display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.82rem; border: 1px solid rgba(16,185,129,0.3);">
+                        📄 كود التوليد: <code>generate_synthetic_battery_data.py</code>
+                    </a>
+                </div>
+
+                <!-- Section B: Ready-made Generated Datasets -->
+                <div style="padding: 0.85rem; background: rgba(0,0,0,0.35); border-radius: 8px; border: 1px dashed rgba(16,185,129,0.45);">
+                    <div style="font-size: 0.88rem; font-weight: 800; color: var(--accent-green); margin-bottom: 0.4rem;">
+                        📂 عينات بيانات نموذجية قمنا بتوليدها مسبقاً (جاهزة للتحميل والعمل المباشر فوراً):
+                    </div>
+                    <div style="font-size: 0.8rem; color: var(--text-secondary); margin-bottom: 0.6rem; line-height: 1.65; background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 4px; border-right: 3px solid var(--accent-green);">
+                        📌 <strong>توضيح هام للطالب والمشرف:</strong> لتوفير وقتك ولتتمكن من بدء تدريب نماذج الذكاء الاصطناعي فوراً دون الحاجة لتشغيل أي كود بايثون مسبقاً، قمنا بتشغيل الكود وتوليد هذه الملفات الـ 5 مسبقاً وفق المعايير الكهروكيميائية لخلايا الليثيوم. بإمكانك تحميلها مباشرة، كما يمكنك في أي وقت توليد غيرها باستخدام الكود أعلاه:
+                    </div>
+
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.4rem;">
+                        <a href="data_acquisition/generated_datasets/synthetic_battery_fresh_cell.csv" target="_blank" style="color: var(--text-primary); text-decoration: none; background: rgba(255,255,255,0.05); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.08);">
+                            📥 تحميل: <strong>synthetic_battery_fresh_cell.csv</strong> (خلية سليمة)
+                        </a>
+                        <a href="data_acquisition/generated_datasets/synthetic_battery_aged_cell.csv" target="_blank" style="color: var(--text-primary); text-decoration: none; background: rgba(255,255,255,0.05); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.08);">
+                            📥 تحميل: <strong>synthetic_battery_aged_cell.csv</strong> (خلية متقادمة)
+                        </a>
+                        <a href="data_acquisition/generated_datasets/synthetic_battery_thermal_runaway_warning.csv" target="_blank" style="color: var(--accent-rose); text-decoration: none; background: rgba(244,63,94,0.1); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(244,63,94,0.3); font-weight: 700;">
+                            📥 تحميل: <strong>synthetic_battery_thermal_runaway_warning.csv</strong> (إنذار حراري)
+                        </a>
+                        <a href="data_acquisition/generated_datasets/synthetic_battery_rul_500cycles.csv" target="_blank" style="color: var(--text-primary); text-decoration: none; background: rgba(255,255,255,0.05); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(255,255,255,0.08);">
+                            📥 تحميل: <strong>synthetic_battery_rul_500cycles.csv</strong> (تدهور 500 دورة)
+                        </a>
+                        <a href="data_acquisition/generated_datasets/synthetic_battery_timeseries_7days.csv" target="_blank" style="color: var(--accent-cyan); text-decoration: none; background: rgba(6,182,212,0.1); padding: 0.35rem 0.7rem; border-radius: 4px; font-size: 0.82rem; border: 1px solid rgba(6,182,212,0.3); font-weight: 700;">
+                            📥 تحميل: <strong>synthetic_battery_timeseries_7days.csv</strong> (أسبوع كامل)
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Option 2 Card -->
+            <div class="substep-box" style="border: 1px solid rgba(6, 182, 212, 0.4); background: rgba(6, 182, 212, 0.04);">
+                <div class="substep-title">
+                    <span>🔵 الخيار الثاني: قواعد البيانات العالمية المعتمدة الجاهزة (NASA Benchmark Datasets)</span>
+                </div>
+                <div class="substep-desc">بيانات معملية واقعية جاهزة ومحملة مسبقاً مستوردة من مركز أبحاث ناسا (NASA Ames Prognostics Center of Excellence).</div>
+                
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>داتا سيت ناسا المرجعية الرسمية <strong>NASA B0005 Battery Dataset</strong> (168 دورة شحن وتفريغ حتى انهيار السعة).</span></li>
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تم تحميل العينة مسبقاً وتضمينها في المشروع لتمكين الطالب من العمل والتدريب الفوري دون عناء البحث في المستودعات الخارجية.</span></li>
+                </ul>
+
+                <!-- Official Source & Repository Links Box -->
+                <div style="margin-top: 1rem; padding: 0.85rem; background: rgba(0,0,0,0.35); border-radius: 8px; border: 1px dashed rgba(6,182,212,0.45);">
+                    <div style="font-size: 0.88rem; font-weight: 800; color: var(--accent-cyan); margin-bottom: 0.4rem;">
+                        🌐 المصادر الرسمية والروابط للمستودعات العالمية المفتوحة:
+                    </div>
+                    
+                    <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.82rem; margin-bottom: 0.7rem;">
+                        <div style="background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 4px; border-right: 3px solid var(--accent-cyan);">
+                            <strong>1. مستودع مركز أبحاث ناسا (NASA Ames Prognostics Data Repository):</strong>
+                            <br><a href="https://data.nasa.gov/" target="_blank" style="color: var(--accent-cyan); font-weight: 700;">🔗 رابط المستودع: data.nasa.gov (NASA Ames PCoE Li-ion Battery Dataset)</a>
+                            <br><span style="color: var(--text-muted); font-size: 0.78rem;">المرجع الدولي القياسي لأبحاث تقدير الـ SOH وتوقع الـ RUL (خلايا 18650 عند 24°C و 44°C).</span>
+                        </div>
+
+                        <div style="background: rgba(255,255,255,0.02); padding: 0.5rem; border-radius: 4px; border-right: 3px solid #38bdf8;">
+                            <strong>2. مستودع جامعة أكسفورد لأبحاث الطاقة (Oxford Energy Lab):</strong>
+                            <br><a href="https://ora.ox.ac.uk/" target="_blank" style="color: #38bdf8; font-weight: 700;">🔗 رابط المستودع: ora.ox.ac.uk (Oxford Battery Degradation Dataset)</a>
+                            <br><span style="color: var(--text-muted); font-size: 0.78rem;">قياسات طيف المعاوقة الكهروكيميائية (EIS) وتدهور السعة لخلايا الليثيوم.</span>
+                        </div>
+                    </div>
+
+                    <!-- Pre-downloaded File Ready to Use -->
+                    <div style="background: rgba(6,182,212,0.08); padding: 0.75rem; border-radius: 6px; border: 1px solid rgba(6,182,212,0.25);">
+                        <div style="font-size: 0.84rem; font-weight: 700; color: var(--accent-cyan); margin-bottom: 0.3rem;">
+                            📥 ملف الداتا سيت المرجعية الجاهزة (المحمّل مسبقاً داخل مجلد المشروع):
+                        </div>
+                        <div style="font-size: 0.78rem; color: var(--text-secondary); margin-bottom: 0.5rem; line-height: 1.5;">
+                            📌 <strong>محتوى الملف:</strong> 168 دورة شحن وتفريغ كاملة للخلية B0005، تشمل: رقم الدورة، زمن الشحن والتفريغ CC-CV، السعة المقاسة Ah (تهبط من 1.85 Ah إلى 1.32 Ah)، نسبة الـ SOH، المقاومة الداخلية، أقصى درجة حرارة، والدورات المتبقية حتى نهاية العمر (RUL).
+                        </div>
+                        <a href="data_acquisition/benchmark_datasets/NASA_Battery_Data/NASA_B0005_Battery_Degradation_Sample.csv" target="_blank" style="color: #000; text-decoration: none; font-size: 0.84rem; font-weight: 800; padding: 0.45rem 0.9rem; background: var(--accent-cyan); border-radius: 4px; display: inline-flex; align-items: center; gap: 0.4rem; box-shadow: 0 4px 12px rgba(6,182,212,0.3);">
+                            📥 تحميل الملف المرجعي الجاهز: <strong>NASA_B0005_Battery_Degradation_Sample.csv</strong> (168 دورة)
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Data Sufficiency Guarantee Banner -->
+        <div style="margin: 1.2rem 0; padding: 1.25rem; background: rgba(16, 185, 129, 0.08); border: 1px solid rgba(16, 185, 129, 0.35); border-radius: 10px; font-size: 0.88rem; line-height: 1.75;">
+            <div style="font-weight: 900; color: var(--accent-green); font-size: 1.05rem; margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+                🛡️ تأكيد وضمان كفاية البيانات لإتمام المشروع بنسبة 100% (Data Sufficiency Guarantee)
+            </div>
+            <div style="color: var(--text-secondary);">
+                نؤكد للمشرف والطالب وبشكل قاطع أن البيانات المتوفرة في <strong>كلا المسارين (المولد المطور، والمرجعي العالمي من ناسا)</strong> كافية ومستوفية تماماً لكل متطلبات خوارزميات ومراحل المشروع دون أي نقص أو حاجة لبيانات إضافية:
+                <br>• <strong>المرحلة 3 و 4 (استخراج الميزات وتدريب نماذج التنبؤ بالذكاء الاصطناعي LSTM & XGBoost):</strong> تتوفر سلاسل زمنية كاملة تضم متغيرات الجهد، التيار، الحرارة، زمن الشحن بالجهد الثابت CV، والمقاومة الداخلية. هذه الحقول تكفي تماماً لتدريب النماذج بدقة خطأ مطلق أقل من 1.5% (RMSE &lt; 0.015) وتوقع الـ RUL لـ 150 دورة بنطاق ثقة 95%.
+                <br>• <strong>المرحلة 5 (خوارزمية الإنذار المبكر بالهروب الحراري):</strong> الملف المخصص <code>synthetic_battery_thermal_runaway_warning.csv</code> يشتمل على قراءات دقيقة للشذوذ في هبوط الجهد الفوري والتسارع الحراري غير الطبيعي (\( dT/dt > 1.5^\circ\text{C/min} \)) لاختبار وبرمجة شروط العزل التلقائي (Relay Trip) ومنع اشتعال الخلايا.
+                <br>• <strong>المرحلة 6 (لوحة تحكم نظام إدارة البطاريات التنبؤي Predictive BMS GUI):</strong> البيانات مهيأة للربط المباشر مع واجهات العرض لمراقبة حزم بطاريات السيارات الكهربائية ومحطات الطاقة الشمسية.
+            </div>
+        </div>
+
+        <!-- Physical Sensors in Battery System Table -->
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>الموقع في حزمة البطاريات (Battery Pack)</th>
+                    <th>نوع القياس الحساس</th>
+                    <th>المستشعر الصناعي المستخدم</th>
+                    <th>الهدف التنبؤي في الـ BMS الذكي</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>أقطاب الخلايا الفردية (Cell Terminals)</strong></td>
+                    <td>جهد الخلية اللحظي (Cell Voltage ±1mV)</td>
+                    <td>Precision Voltage Tapping (LTC6811 / BQ76952)</td>
+                    <td>كشف عدم اتزان الخلايا وهبوط الجهد الفوري (Ohmic Drop)</td>
+                </tr>
+                <tr>
+                    <td><strong>ناقل التيار الرئيسي (Main Busbar)</strong></td>
+                    <td>تيار الشحن والتفريغ الكلي (Current ±0.1A)</td>
+                    <td>Shunt Resistor / Hall-Effect Current Sensor (LEM)</td>
+                    <td>حساب تراكم الشحنة (Coulomb Counting) وتقدير الـ SOC</td>
+                </tr>
+                <tr>
+                    <td><strong>جدار وهيكل الخلايا الداخلي</strong></td>
+                    <td>درجة حرارة النقاط الساخنة (Hotspots)</td>
+                    <td>NTC Thermistor Surface Array (10kΩ)</td>
+                    <td>كشف التسارع الحراري المبكر (dT/dt Anomaly) وحماية الخلايا</td>
+                </tr>
+                <tr>
+                    <td><strong>أطراف الحزمة المتكاملة</strong></td>
+                    <td>المقاومة الداخلية والمعاوقة (Impedance)</td>
+                    <td>Online EIS Spectrometer / High-Frequency AC Pulse</td>
+                    <td>مراقبة تآكل طبقة SEI وتقدير الحالة الصحية SOH مباشرة</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Interactive Simulator Widget for Battery -->
+        <div class="simulator-widget">
+            <div style="font-weight: 700; color: var(--accent-green); margin-bottom: 0.5rem; font-size: 0.95rem;">
+                🎮 محاكي سلوك بطارية الليثيوم: اختبار منحنى التفريغ، هبوط السعة، واكتشاف الهروب الحراري
+            </div>
+            <div class="sim-controls">
+                <button class="sim-btn active-sim" onclick="runBatterySim('fresh', this)">خلية سليمة جديدة (Fresh Cell - SOH 98.5%)</button>
+                <button class="sim-btn" onclick="runBatterySim('aged', this)">خلية متقادمة (Aged Cell - SOH 81.2%)</button>
+                <button class="sim-btn" onclick="runBatterySim('thermal', this)">إنذار هروب حراري (Thermal Runaway Anomaly)</button>
+                <span id="batterySimNote" style="font-size: 0.85rem; color: var(--text-muted);">انقر لمشاهدة استجابة نظام الـ BMS ومنحنيات الجهد والحرارة</span>
+            </div>
+            <canvas id="batteryCanvas"></canvas>
+        </div>
+    </section>
+
+    <!-- PHASE 3 -->
+    <section class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">🧠</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 3: هندسة استخراج الميزات التنبؤية (Health Feature Extraction)</h2>
+                    <div class="phase-subtitle">تحويل منحنيات الشحن والتفريغ إلى مؤشرات صحية حاسمة لنماذج الذكاء الاصطناعي</div>
+                </div>
+            </div>
+            <span class="phase-tag">الشهر 3</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">3.1 تحليل السعة التزايدية (ICA - dQ/dV Analysis)</div>
+                <div class="substep-desc">اشتقاق منحنى الشحن للحصول على قمم السعة التزايدية التي تعكس مباشرة تركيز الليثيوم وصحة القطبين.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تتبع انزياح القمم (Peak Shift) كدليل رياضي على تآكل المادة الفعالة.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">3.2 زمن الشحن بالجهد الثابت (Constant Voltage Charge Time)</div>
+                <div class="substep-desc">كلما تقدم عمر البطارية زادت مقاومتها، مما يجعل مرحلة الشحن بالجهد الثابت (CV Phase) تستغرق وقتاً أطول.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>ميزة زمنية فائقة الدقة لا تتطلب تفريغ البطارية بالكامل لحساب السعة.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">3.3 معامل هبوط الجهد الفوري (Ohmic Drop)</div>
+                <div class="substep-desc">قياس الانخفاض اللحظي في الجهد عند بدء سحب الحمل لحساب المقاومة الأومية الفورية (\( R_0 = \Delta V / I \)).</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>مؤشر فوري على صحة التوصيلات والمحلول الإلكتروليتي.</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 4 -->
+    <section class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">🔮</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 4: بناء وتدريب نماذج التنبؤ بالذكاء الاصطناعي (AI Prognostics Pipeline)</h2>
+                    <div class="phase-subtitle">تطبيق شبكات LSTM والانتباه (Attention Mechanism) والتعلم العميق الهجين لتقدير SOH وتوقع RUL</div>
+                </div>
+            </div>
+            <span class="phase-tag">الشهر 4 - 5</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">4.1 شبكات الذاكرة طويلة المدى ثنائية الاتجاه (Bi-LSTM)</div>
+                <div class="substep-desc">التقاط العلاقات الزمنية غير الخطية لتدهور السعة عبر مئات دورات الشحن السابقة واللاحقة.</div>
+            </div>
+            <div class="substep-box">
+                <div class="substep-title">4.2 آلية الانتباه متعدد الرؤوس (Multi-Head Attention)</div>
+                <div class="substep-desc">منح أوزان أكبر للدورات الحرجة التي شهدت شحناً سريعاً أو درجات حرارة مرتفعة لتسريع كشف التدهور.</div>
+            </div>
+            <div class="substep-box">
+                <div class="substep-title">4.3 بنية التنبؤ المزدوجة (Dual-Head Multi-Task Learning)</div>
+                <div class="substep-desc">نموذج عصبي موحد يُخرج بالتوازي كلاً من: الحالة الصحية اللحظية (SOH) والعمر المتبقي (RUL Cycles).</div>
+            </div>
+        </div>
+
+        <!-- Modern Code Studio Component -->
+        <div class="code-studio">
+            <div class="code-studio-bar">
+                <div class="code-studio-left">
+                    <div class="code-studio-dots">
+                        <span class="code-dot dot-red"></span>
+                        <span class="code-dot dot-yellow"></span>
+                        <span class="code-dot dot-green"></span>
+                    </div>
+                    <div class="code-studio-title">
+                        <span>bms_battery_prognostics_model.py</span>
+                        <span class="badge-small badge-emerald">Python 3.10+ / TensorFlow 2.15+</span>
+                    </div>
+                </div>
+                <div class="code-studio-actions">
+                    <button class="copy-btn" onclick="copyCode(this)">📋 نسخ الكود البرمجي</button>
+                </div>
+            </div>
+            <div class="code-studio-body">
+                <pre class="code-studio-pre"><code><span class="syn-kw">import</span> tensorflow <span class="syn-kw">as</span> tf
+<span class="syn-kw">from</span> tensorflow.keras <span class="syn-kw">import</span> layers
+
+<span class="syn-kw">def</span> <span class="syn-fn">build_battery_prognostics_model</span>(<span class="syn-param">sequence_length</span>=<span class="syn-num">30</span>, <span class="syn-param">num_features</span>=<span class="syn-num">5</span>):
+    <span class="syn-doc">"""
+    Hybrid Deep Learning Architecture for Battery SOH & RUL Prognostics
+    Inputs: Sequence of [Voltage, Current, Temp, DeltaV, CV_Time] over last N cycles
+    Outputs: [SOH percentage, Remaining Cycles to EOL]
+    """</span>
+    inputs = layers.Input(shape=(sequence_length, num_features), name=<span class="syn-str">"Battery_Cycle_Inputs"</span>)
+    
+    <span class="syn-cmt"># 1. Bidirectional LSTM for temporal degradation dynamics</span>
+    x = layers.Bidirectional(layers.LSTM(<span class="syn-num">64</span>, return_sequences=<span class="syn-bool">True</span>))(inputs)
+    x = layers.Dropout(<span class="syn-num">0.2</span>)(x)
+    
+    <span class="syn-cmt"># 2. Multi-Head Attention to weight critical degradation events</span>
+    attn_out = layers.MultiHeadAttention(num_heads=<span class="syn-num">4</span>, key_dim=<span class="syn-num">64</span>)(x, x)
+    x = layers.Add()([x, attn_out])
+    x = layers.GlobalAveragePooling1D()(x)
+    
+    <span class="syn-cmt"># 3. Dense Representation Layer</span>
+    dense_features = layers.Dense(<span class="syn-num">32</span>, activation=<span class="syn-str">"relu"</span>)(x)
+    
+    <span class="syn-cmt"># 4. Multi-Task Output Heads (Simultaneous SOH & RUL Estimation)</span>
+    soh_output = layers.Dense(<span class="syn-num">1</span>, activation=<span class="syn-str">"sigmoid"</span>, name=<span class="syn-str">"SOH_Prediction"</span>)(dense_features)
+    rul_output = layers.Dense(<span class="syn-num">1</span>, activation=<span class="syn-str">"relu"</span>, name=<span class="syn-str">"RUL_Cycles_Prediction"</span>)(dense_features)
+    
+    model = tf.keras.Model(inputs=inputs, outputs=[soh_output, rul_output], name=<span class="syn-str">"BMS_Prognostics_Model"</span>)
+    model.compile(
+        optimizer=tf.keras.optimizers.Adam(learning_rate=<span class="syn-num">0.001</span>),
+        loss={<span class="syn-str">"SOH_Prediction"</span>: <span class="syn-str">"mse"</span>, <span class="syn-str">"RUL_Cycles_Prediction"</span>: <span class="syn-str">"mae"</span>},
+        loss_weights={<span class="syn-str">"SOH_Prediction"</span>: <span class="syn-num">1.0</span>, <span class="syn-str">"RUL_Cycles_Prediction"</span>: <span class="syn-num">0.01</span>}
+    )
+    <span class="syn-kw">return</span> model</code></pre>
+            </div>
+        </div>
+
+        <ul class="task-list" style="margin-top: 1rem;">
+            <li class="task-item"><span class="bullet-icon">✔️</span> <span><strong>دقة تقدير الـ SOH:</strong> خطأ مطلق أقل من 1.5% (RMSE &lt; 0.015) على بيانات ناسا وأكسفورد.</span></li>
+            <li class="task-item"><span class="bullet-icon">✔️</span> <span><strong>دقة توقع الـ RUL:</strong> التنبؤ بلحظة نهاية العمر (EOL عند 80% سعة) بنطاق ثقة 95% قبل الوصول إليها بـ 150 دورة شحن.</span></li>
+        </ul>
+    </section>
+
+    <!-- PHASE 5 -->
+    <section class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">🛡️</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 5: خوارزمية الإنذار المبكر بالهروب الحراري (Thermal Runaway Early Warning)</h2>
+                    <div class="phase-subtitle">حماية منظومات التخزين والسيارات الكهربائية من الحرائق عبر الكشف المبكر عن الدارات القصيرة الداخلية</div>
+                </div>
+            </div>
+            <span class="phase-tag">الشهر 5</span>
+        </div>
+
+        <div class="substeps-grid">
+            <div class="substep-box">
+                <div class="substep-title">5.1 كشف القصر الداخلي (Internal Short Circuit - ISC)</div>
+                <div class="substep-desc">قبل اشتعال البطارية بساعات، يحدث نمو شجيري لليثيوم (Lithium Dendrites) يخترق الفاصل مسبباً تسرباً طفيفاً للجهد أثناء الراحة.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>تتبع معدل تفريغ الجهد الذاتي غير الطبيعي (Self-Discharge Anomaly) بواسطة Isolation Forest.</span></li>
+                </ul>
+            </div>
+
+            <div class="substep-box">
+                <div class="substep-title">5.2 كشف التدرج الحراري الشاذ (dT/dt Anomaly)</div>
+                <div class="substep-desc">مراقبة معدل ارتفاع الحرارة بالنسبة للتيار. أي قفزة حرارية دون زيادة في الحمل تطلق فوراً أمر العزل الأوتوماتيكي للخلية.</div>
+                <ul class="task-list">
+                    <li class="task-item"><span class="bullet-icon">✔️</span> <span>إصدار إنذار حرج وإرسال إشارة للريليه (Relay Trip) لفصل الخلية المتضررة عن باقي الحزمة (Pack).</span></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 6 -->
+    <section class="phase-card">
+        <div class="phase-header">
+            <div class="phase-title-group">
+                <div class="phase-icon-box">💻</div>
+                <div>
+                    <h2 class="phase-title">المرحلة 6: واجهة نظام إدارة البطاريات التنبؤي الذكي (Predictive BMS Dashboard & GUI)</h2>
+                    <div class="phase-subtitle">تطوير تطبيق ويب ولوحة تحكم متطورة لمراقبة حزم بطاريات الطاقة الشمسية والسيارات الكهربائية لحظياً</div>
+                </div>
+            </div>
+            <span class="phase-tag">الشهر 6</span>
+        </div>
+
+        <table class="custom-table">
+            <thead>
+                <tr>
+                    <th>الميزة في لوحة تحكم الـ BMS</th>
+                    <th>الوظيفة للمهندس ومشغل المنظومة</th>
+                    <th>التقنية البرمجية المقترحة</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>عداد الحالة الصحية التفاعلي (SOH Gauge)</strong></td>
+                    <td>عرض نسبة صحة كل خلية في الحزمة ومراقبة اتزان الخلايا (Cell Balancing)</td>
+                    <td>HTML5 Canvas / Chart.js / Streamlit</td>
+                </tr>
+                <tr>
+                    <td><strong>أفق توقع العمر المتبقي (RUL Horizon)</strong></td>
+                    <td>رسم بياني يوضح عدد الدورات والأيام المتبقية حتى EOL مع فترات الثقة الإحصائية</td>
+                    <td>Plotly Interactive Graphs</td>
+                </tr>
+                <tr>
+                    <td><strong>نظام إنذار السلامة السريع (Emergency Trip)</strong></td>
+                    <td>إطلاق تنبيه صوتي وإشارة عزل كهربي فوري عند استشعار شذوذ حراري حرج</td>
+                    <td>FastAPI / Python Webhooks / IoT MQTT</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+
+    <footer>
+        <p>مقترح مشروع التخرج: المنظومة التنبؤية لبطاريات الليثيوم (Predictive BMS) • قسم هندسة الطاقة المتجددة / الميكاترونيكس والذكاء الاصطناعي • 2026</p>
+    </footer>
+</div>
+
+<script>
+    // نسخ الكود البرمجي
+    function copyCode(btn) {
+        const pre = btn.closest('.code-box').querySelector('pre');
+        if (!pre) return;
+        navigator.clipboard.writeText(pre.innerText).then(() => {
+            const originalText = btn.innerText;
+            btn.innerText = '✔️ تم النسخ!';
+            btn.style.background = '#10b981';
+            btn.style.color = '#000';
+            setTimeout(() => {
+                btn.innerText = originalText;
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 2000);
+        });
+    }
+
+    // محاكي تفاعلي لسلوك بطاريات الليثيوم على Canvas
+    let simMode = 'fresh';
+    const canvas = document.getElementById('batteryCanvas');
+    let ctx = canvas ? canvas.getContext('2d') : null;
+
+    function initCanvas() {
+        if (!canvas) return;
+        const rect = canvas.getBoundingClientRect();
+        canvas.width = rect.width * window.devicePixelRatio || 800;
+        canvas.height = 230 * window.devicePixelRatio || 230;
+        ctx = canvas.getContext('2d');
+        ctx.scale(window.devicePixelRatio || 1, window.devicePixelRatio || 1);
+        drawBatterySim();
+    }
+
+    function runBatterySim(mode, btn) {
+        simMode = mode;
+        if (btn) {
+            document.querySelectorAll('.sim-btn').forEach(b => b.classList.remove('active-sim'));
+            btn.classList.add('active-sim');
+        }
+        
+        const note = document.getElementById('batterySimNote');
+        if (note) {
+            if (mode === 'fresh') {
+                note.innerText = 'خلية سليمة جديدة: تفريغ مستقر فوق 3.6V، حرارة مستقرة ~26°C، سعة كاملة 2.5 Ah.';
+                note.style.color = '#10b981';
+            } else if (mode === 'aged') {
+                note.innerText = 'خلية متقادمة: هبوط سريع في الجهد بفعل المقاومة الداخلية العالية، وسعة متراجعة إلى 2.02 Ah.';
+                note.style.color = '#f59e0b';
+            } else if (mode === 'thermal') {
+                note.innerText = 'تحذير حرج: انهيار الجهد وقفزة حرارية حادة نحو 68°C، انطلاق أمر العزل الأوتوماتيكي للخلية!';
+                note.style.color = '#f43f5e';
+            }
+        }
+        drawBatterySim();
+    }
+
+    function drawBatterySim() {
+        if (!ctx || !canvas) return;
+        const w = canvas.getBoundingClientRect().width;
+        const h = 230;
+
+        ctx.clearRect(0, 0, w, h);
+
+        // خلفية وشبكة رسم
+        ctx.fillStyle = '#050811';
+        ctx.fillRect(0, 0, w, h);
+
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.06)';
+        ctx.lineWidth = 1;
+        for (let x = 60; x < w - 20; x += 60) {
+            ctx.beginPath();
+            ctx.moveTo(x, 20);
+            ctx.lineTo(x, h - 35);
+            ctx.stroke();
+        }
+        for (let y = 30; y < h - 35; y += 40) {
+            ctx.beginPath();
+            ctx.moveTo(60, y);
+            ctx.lineTo(w - 20, y);
+            ctx.stroke();
+        }
+
+        // المحاور
+        ctx.fillStyle = '#64748b';
+        ctx.font = '11px Cairo, sans-serif';
+        ctx.fillText('4.2V', 20, 35);
+        ctx.fillText('3.7V', 20, 85);
+        ctx.fillText('3.2V', 20, 135);
+        ctx.fillText('2.8V', 20, 185);
+
+        ctx.fillText('0%', 65, h - 15);
+        ctx.fillText('50% التفريغ (DOD)', w / 2 - 40, h - 15);
+        ctx.fillText('100% اكتمال التفريغ', w - 110, h - 15);
+
+        // رسم منحنى الجهد
+        ctx.beginPath();
+        const startX = 60;
+        const plotW = w - 80;
+
+        for (let i = 0; i <= plotW; i += 2) {
+            const progress = i / plotW;
+            let v = 4.15;
+            
+            if (simMode === 'fresh') {
+                v = 4.15 - (0.45 * progress) - (0.7 * Math.pow(progress, 4));
+            } else if (simMode === 'aged') {
+                v = 4.02 - (0.75 * progress) - (0.95 * Math.pow(progress, 3));
+            } else { // thermal runaway
+                v = 4.00 - (0.5 * progress);
+                if (progress > 0.6) {
+                    v -= Math.pow((progress - 0.6) * 4, 2) * 0.8; // انهيار حاد
+                }
+            }
+
+            // تحويل الجهد إلى إحداثي y (4.2V -> 30px, 2.7V -> 190px)
+            const y = 30 + ((4.20 - v) / (4.20 - 2.70)) * 160;
+            const curY = Math.min(195, Math.max(25, y));
+
+            if (i === 0) ctx.moveTo(startX + i, curY);
+            else ctx.lineTo(startX + i, curY);
+        }
+
+        if (simMode === 'fresh') {
+            ctx.strokeStyle = '#10b981';
+            ctx.shadowColor = 'rgba(16, 185, 129, 0.4)';
+        } else if (simMode === 'aged') {
+            ctx.strokeStyle = '#f59e0b';
+            ctx.shadowColor = 'rgba(245, 158, 11, 0.4)';
+        } else {
+            ctx.strokeStyle = '#f43f5e';
+            ctx.shadowColor = 'rgba(244, 63, 94, 0.5)';
+        }
+        ctx.shadowBlur = 8;
+        ctx.lineWidth = 3;
+        ctx.stroke();
+        ctx.shadowBlur = 0;
+
+        // بطاقة إحصائية مدمجة على زاوية المحاكي
+        ctx.fillStyle = 'rgba(0, 0, 0, 0.7)';
+        ctx.fillRect(w - 230, 25, 210, 85);
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)';
+        ctx.lineWidth = 1;
+        ctx.strokeRect(w - 230, 25, 210, 85);
+
+        ctx.font = 'bold 12px Cairo, sans-serif';
+        if (simMode === 'fresh') {
+            ctx.fillStyle = '#10b981';
+            ctx.fillText('الحالة: خلية سليمة (OPTIMAL)', w - 215, 45);
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText('الحالة الصحية: SOH 98.5%', w - 215, 65);
+            ctx.fillText('الحرارة: 26.2°C | R: 0.024 Ω', w - 215, 85);
+            ctx.fillText('العمر المتبقي المتوقع: 520 دورة', w - 215, 100);
+        } else if (simMode === 'aged') {
+            ctx.fillStyle = '#f59e0b';
+            ctx.fillText('الحالة: تقادم ملحوظ (AGED)', w - 215, 45);
+            ctx.fillStyle = '#94a3b8';
+            ctx.fillText('الحالة الصحية: SOH 81.2%', w - 215, 65);
+            ctx.fillText('الحرارة: 34.8°C | R: 0.068 Ω', w - 215, 85);
+            ctx.fillText('العمر المتبقي المتوقع: 45 دورة', w - 215, 100);
+        } else {
+            ctx.fillStyle = '#f43f5e';
+            ctx.fillText('⚠️ إنذار: هروب حراري (CRITICAL)', w - 215, 45);
+            ctx.fillStyle = '#f87171';
+            ctx.fillText('الحالة الصحية: خطر اشتعال دائم', w - 215, 65);
+            ctx.fillText('الحرارة: 68.4°C (dT/dt شاذ)', w - 215, 85);
+            ctx.fillText('إجراء الـ BMS: فصل الخلية فوراً', w - 215, 100);
+        }
+    }
+
+    function copyCode(btn) {
+        const container = btn.closest('.code-studio') || btn.closest('.code-box');
+        if (!container) return;
+        const pre = container.querySelector('pre');
+        if (!pre) return;
+        navigator.clipboard.writeText(pre.innerText).then(() => {
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '✔️ تم النسخ!';
+            btn.style.background = '#10b981';
+            btn.style.color = '#000';
+            setTimeout(() => {
+                btn.innerHTML = originalText;
+                btn.style.background = '';
+                btn.style.color = '';
+            }, 2000);
+        });
+    }
+
+    window.addEventListener('load', () => {
+        initCanvas();
+        window.addEventListener('resize', initCanvas);
+    });
+</script>
+
+</body>
+</html>
